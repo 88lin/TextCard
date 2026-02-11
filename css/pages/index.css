@@ -203,7 +203,12 @@
   line-height: 1.1;
   letter-spacing: -0.03em;
   margin-bottom: 24px;
-  color: #000;
+  background: linear-gradient(90deg, #5f3bff 0%, #9b5cff 35%, #f157f4 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
 }
 
 .hero-title .accent {
