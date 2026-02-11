@@ -6,11 +6,11 @@
 
 一键将深度长文转化为排版精美的系列图片，打造**独一无二的个人 IP 视觉风格**
 
-[![GitHub Stars](https://img.shields.io/github/stars/geekfoxcharlie/XHS-TextCard?style=social)](https://github.com/geekfoxcharlie/XHS-TextCard)
+[![GitHub Stars](https://img.shields.io/github/stars/88lin/TextCard?style=social)](https://github.com/88lin/TextCard)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Made with Love](https://img.shields.io/badge/made%20with-❤️-ff69b4.svg)]()
 
-🌐 **[在线演示](https://www.xhs-textcard.site)** | 📖 **[使用文档](#-快速开始)** | ⭐ **[点个 Star](https://github.com/geekfoxcharlie/XHS-TextCard)**
+🌐 **[在线演示](https://88lin.github.io/TextCard)** | 📖 **[使用文档](#-快速开始)** | ⭐ **[点个 Star](https://github.com/88lin/TextCard)**
 
 </div>
 
@@ -81,13 +81,13 @@
 
 ### 在线使用（推荐）
 
-直接访问：[https://www.xhs-textcard.site](https://www.xhs-textcard.site)
+直接访问：[https://88lin.github.io/TextCard](https://88lin.github.io/TextCard)
 
 ### 本地使用
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/geekfoxcharlie/XHS-TextCard.git
+git clone https://github.com/88lin/TextCard.git
 cd XHS-TextCard
 
 # 2. 启动本地服务器
@@ -101,7 +101,7 @@ open http://localhost:8000/editor.html
 
 ### 一键部署
 
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/geekfoxcharlie/XHS-TextCard)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/88lin/TextCard)
 
 ---
 
