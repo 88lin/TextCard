@@ -242,6 +242,27 @@ class EditorController {
             });
         });
 
+        // 导出格式选择器
+        document.querySelectorAll('.format-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const format = btn.dataset.format;
+                const hint = document.getElementById('format-hint');
+                if (hint) {
+                    if (format === 'png') {
+                        hint.textContent = 'PNG：无损压缩，最高画质';
+                    } else {
+                        hint.textContent = 'JPEG：文件小，缩略图更清晰';
+                    }
+                }
+                
+                // 通知App更新导出格式
+                if (this.onExportFormatChange) this.onExportFormatChange(format);
+            });
+        });
+
         const presetGroups = [
             { container: '#bg-color-presets', type: 'bg' }, 
             { container: '#text-color-presets', type: 'text' },
@@ -417,5 +438,6 @@ class EditorController {
     }
 
     setOnConfigChange(callback) { this.onConfigChange = callback; }
+    setOnExportFormatChange(callback) { this.onExportFormatChange = callback; }
     notifyConfigChange() { if (this.onConfigChange) this.onConfigChange(this.currentConfig); }
 }

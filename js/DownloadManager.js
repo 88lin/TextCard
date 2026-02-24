@@ -10,10 +10,15 @@ class DownloadManager {
     constructor() {
         this.loadingElement = null;
         this.renderer = new CanvasRenderer();
+        this.exportFormat = 'png';
     }
 
     setLoadingElement(element) {
         this.loadingElement = element;
+    }
+
+    setExportFormat(format) {
+        this.exportFormat = format;
     }
 
     showLoading() { this.loadingElement?.classList.add('active'); }
@@ -37,6 +42,12 @@ class DownloadManager {
             scale: OUTPUT_WIDTH / PREVIEW_WIDTH 
         });
         
+        // 根据选择的格式导出
+        // PNG：无损压缩，适合需要透明背景
+        // JPEG：有损压缩，在小红书安卓端缩略图显示更清晰，使用0.92质量
+        if (this.exportFormat === 'jpeg') {
+            return canvas.toDataURL('image/jpeg', 0.92);
+        }
         return canvas.toDataURL('image/png');
     }
 
@@ -66,7 +77,8 @@ class DownloadManager {
         if (!layouts) return;
         await this.withLoading(async () => {
             const dataUrl = await this.capture(layouts, config, templateId, index, totalCount);
-            this.triggerDownload(dataUrl, `xhs-card-${index + 1}-${Date.now()}.png`);
+            const ext = this.exportFormat === 'jpeg' ? 'jpg' : 'png';
+            this.triggerDownload(dataUrl, `xhs-card-${index + 1}-${Date.now()}.${ext}`);
         });
     }
 
@@ -80,9 +92,10 @@ class DownloadManager {
         await this.withLoading(async () => {
             const zip = new JSZip();
             const totalCount = pages.length;
+            const ext = this.exportFormat === 'jpeg' ? 'jpg' : 'png';
             for (let i = 0; i < totalCount; i++) {
                 const dataUrl = await this.capture(pages[i], config, templateId, i, totalCount);
-                zip.file(`card-${i + 1}.png`, dataUrl.split(',')[1], { base64: true });
+                zip.file(`card-${i + 1}.${ext}`, dataUrl.split(',')[1], { base64: true });
             }
 
             const blob = await zip.generateAsync({ type: 'blob' });
