@@ -98,6 +98,11 @@ class App {
             
             this.generatePreview();
         });
+        
+        // 连接导出格式选择器
+        this.editorController.setOnExportFormatChange((format) => {
+            this.downloadManager.setExportFormat(format);
+        });
     }
 
     bindEvents() {
