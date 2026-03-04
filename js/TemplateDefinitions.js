@@ -188,7 +188,7 @@ const TemplateDefinitions = {
             const photoWidth = paperWidth - (photoMargin * 2);
             const photoHeight = paperHeight - 450;
             
-            ctx.fillStyle = config.bgColor && config.bgMode === 'solid' ? config.bgColor : '#2C2C2C';
+            ctx.fillStyle = '#2C2C2C';
             ctx.fillRect(marginX + photoMargin, marginY + photoMargin, photoWidth, photoHeight);
             
             const grad = ctx.createLinearGradient(marginX + photoMargin, marginY + photoMargin, marginX + photoMargin + photoWidth, marginY + photoMargin + photoHeight);
