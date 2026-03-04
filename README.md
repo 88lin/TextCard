@@ -24,7 +24,7 @@
 <!-- GIF 演示占位 -->
 <div align="center">
 
-![XHS-TextCard 演示](assets/readme/demo.gif)
+![XHS-TextCard 演示](assets/readme/demo.png)
 
 *实时预览 · 智能分页 · 一键导出*
 
