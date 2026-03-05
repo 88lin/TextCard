@@ -38,7 +38,8 @@ class EditorController {
             { key: 'h3Scale', type: 'range', isFloat: true },
             { key: 'hasCover', type: 'checkbox', toggle: '#cover-options-container' },
             { key: 'coverTitle', type: 'input' },
-            { key: 'coverFontSize', type: 'range', isInt: true }
+            { key: 'coverFontSize', type: 'range', isInt: true },
+            { key: 'hasSocialIcons', type: 'checkbox', toggle: '#social-icons-options' }
         ];
     }
 
@@ -300,7 +301,7 @@ class EditorController {
                 if (!file) return;
 
                 if (file.size > 10 * 1024 * 1024) {
-                    alert('图片大小不能超过 5MB');
+                    alert('图片大小不能超过 10MB');
                     return;
                 }
 
@@ -313,6 +314,44 @@ class EditorController {
                     fileInput.value = '';
                 };
                 reader.readAsDataURL(file);
+            });
+        }
+
+        // 社交图标选择逻辑
+        document.querySelectorAll('.social-icon-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const iconId = item.dataset.icon;
+                let selectedIcons = [...(this.currentConfig.selectedSocialIcons || [])];
+                
+                const index = selectedIcons.indexOf(iconId);
+                if (index > -1) {
+                    // 如果已选中，则移除
+                    selectedIcons.splice(index, 1);
+                    item.classList.remove('selected');
+                } else {
+                    // 如果未选中，则追加到末尾
+                    selectedIcons.push(iconId);
+                    item.classList.add('selected');
+                }
+                
+                this.currentConfig.selectedSocialIcons = selectedIcons;
+                this.notifyConfigChange();
+            });
+        });
+
+        // 重置所有设置
+        const resetBtn = document.getElementById('reset-storage-btn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                if (confirm('确定要重置所有设置吗？这将删除所有本地保存的模板配置并刷新页面。')) {
+                    // 遍历 localStorage，删除所有以 xhs_tpl_config_ 开头的项
+                    Object.keys(localStorage).forEach(key => {
+                        if (key.startsWith('xhs_tpl_config_') || key === 'xhs_last_template_id') {
+                            localStorage.removeItem(key);
+                        }
+                    });
+                    window.location.reload();
+                }
             });
         }
     }
@@ -357,7 +396,7 @@ class EditorController {
      * 设置全量配置并同步到 UI
      */
     setConfig(config) {
-        this.currentConfig = { ...config };
+        this.currentConfig = JSON.parse(JSON.stringify(config));
         if (config.bgColor) {
             if (config.bgColor.startsWith('linear-gradient')) this.lastGradientColor = config.bgColor;
             else this.lastSolidColor = config.bgColor;
@@ -434,6 +473,13 @@ class EditorController {
                 else el.value = val || '';
             }
             this.updateUIControl(cfg, val);
+        });
+
+        // 恢复社交图标选择状态
+        const selectedIcons = this.currentConfig.selectedSocialIcons || [];
+        document.querySelectorAll('.social-icon-item').forEach(item => {
+            const isSelected = selectedIcons.includes(item.dataset.icon);
+            item.classList.toggle('selected', isSelected);
         });
     }
 
