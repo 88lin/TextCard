@@ -99,8 +99,9 @@ class DownloadManager {
             }
 
             const blob = await zip.generateAsync({ type: 'blob' });
-            this.triggerDownload(URL.createObjectURL(blob), `xhs-cards-${Date.now()}.zip`);
-            URL.revokeObjectURL(blob);
+            const url = URL.createObjectURL(blob);
+            this.triggerDownload(url, `xhs-cards-${Date.now()}.zip`);
+            URL.revokeObjectURL(url);
         });
 
         if (downloadBtn) downloadBtn.disabled = false;
