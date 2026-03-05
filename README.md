@@ -112,7 +112,7 @@
 
 <div align="center">
 
-### [🎉 立即体验 XHS-TextCard 在线版](https://www.xhs-textcard.site)
+### [🎉 立即体验 XHS-TextCard 在线版](https://88lin.github.io/TextCard)
 
 **无需安装 · 即开即用 · 完全免费**
 
@@ -139,7 +139,7 @@ open http://localhost:8000/editor.html
 ### 方式三：一键部署
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/88lin/TextCard)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/geekfoxcharlie/XHS-TextCard)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/88lin/TextCard)
 [![Deploy to GitHub Pages](https://img.shields.io/badge/Deploy%20to-GitHub%20Pages-blue?logo=github)](https://pages.github.com/)
 
 ---
@@ -161,7 +161,7 @@ templates/
 3. 在 `templates/index.json` 注册
 4. 刷新页面即可使用
 
-详见：[模板开发文档](https://github.com/geekfoxcharlie/XHS-TextCard/wiki/模板开发指南)
+详见：[模板开发文档](https://github.com/88lin/TextCard/wiki/模板开发指南)
 
 ---
 
@@ -192,7 +192,7 @@ templates/
 ## 📋 版本信息
 
 - **当前版本**：v1.3
-- **作者**：[@geekfoxcharlie](https://github.com/geekfoxcharlie) (小红书: 极客狐)
+- **作者**：[@geekfoxcharlie](https://github.com/geekfoxcharlie)
 - **协议**：MIT License
 - **最后更新**：2026年3月
 
