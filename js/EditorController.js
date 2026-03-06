@@ -339,6 +339,18 @@ class EditorController {
             });
         });
 
+        // 社交图标位置选择器
+        document.querySelectorAll('#social-icons-options .format-btn[data-position]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#social-icons-options .format-btn[data-position]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const position = btn.dataset.position;
+                this.currentConfig.socialIconPosition = position;
+                this.notifyConfigChange();
+            });
+        });
+
         // 重置所有设置
         const resetBtn = document.getElementById('reset-storage-btn');
         if (resetBtn) {
@@ -480,6 +492,12 @@ class EditorController {
         document.querySelectorAll('.social-icon-item').forEach(item => {
             const isSelected = selectedIcons.includes(item.dataset.icon);
             item.classList.toggle('selected', isSelected);
+        });
+
+        // 恢复社交图标位置选择状态
+        const socialIconPosition = this.currentConfig.socialIconPosition || 'top-right';
+        document.querySelectorAll('#social-icons-options .format-btn[data-position]').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.position === socialIconPosition);
         });
     }
 
