@@ -387,7 +387,13 @@ const TemplateDefinitions = {
             const dateStr = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
             ctx.fillStyle = '#8E8E93'; ctx.font = '500 12px sans-serif'; ctx.textAlign = 'center'; ctx.fillText(dateStr, width / 2, 35);
             ctx.restore();
-            TemplateDefinitions._drawPageNumber(ctx, width, height, index, totalCount, config, { x: width - 25, y: height - 25 });
+
+            // 如果社交图标底部居中，页码稍微右移避开
+            const isBottomCenter = config.hasSocialIcons && config.selectedSocialIcons && config.selectedSocialIcons.length > 0 && config.socialIconPosition === 'bottom-center' && index === 0;
+            TemplateDefinitions._drawPageNumber(ctx, width, height, index, totalCount, config, { 
+                x: width - 25, 
+                y: isBottomCenter ? height - 15 : height - 25 
+            });
         },
         getTextStyles: (segment, config) => {
             const accentColor = config.accentColor || '#FF9500', textColor = config.textColor || '#1C1C1E';
@@ -417,11 +423,18 @@ const TemplateDefinitions = {
         },
         drawForeground: (ctx, width, height, index, totalCount, config) => {
             const accentColor = config.accentColor || '#FF4500', decorativeColor = '#1A1A1A';
+            const isBottomCenter = config.hasSocialIcons && config.selectedSocialIcons && config.selectedSocialIcons.length > 0 && config.socialIconPosition === 'bottom-center' && index === 0;
+
             ctx.save();
             ctx.fillStyle = decorativeColor; ctx.font = '700 10px Helvetica'; ctx.textAlign = 'right';
             ctx.fillText('REF. CH-8004', width - 25, 25);
-            ctx.beginPath(); ctx.rect(width - 40, height - 40, 15, 15); ctx.strokeStyle = accentColor; ctx.lineWidth = 2; ctx.stroke();
+            
+            // 如果底部居中有社交图标，则隐藏这个装饰框，防止重叠
+            if (!isBottomCenter) {
+                ctx.beginPath(); ctx.rect(width - 40, height - 40, 15, 15); ctx.strokeStyle = accentColor; ctx.lineWidth = 2; ctx.stroke();
+            }
             ctx.restore();
+
             TemplateDefinitions._drawPageNumber(ctx, width, height, index, totalCount, config, {
                 color: '#1A1A1A', font: '700 10px Helvetica', padZero: true, textAlign: 'left', x: 25, y: height - 25
             });

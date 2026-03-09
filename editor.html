@@ -461,8 +461,21 @@
                                     <span class="slider round"></span>
                                 </label>
                             </label>
-                            <div id="social-icons-options">
-                                <div class="social-icons-grid" style="grid-template-columns: repeat(3, 1fr);">
+                            <div id="social-icons-options" style="flex-direction: column; gap: 10px;">
+                                <div style="display: flex; flex-direction: column; gap: 5px;">
+                                    <label class="form-label" style="font-size: 13px; color: #666; margin-bottom: 0;">
+                                        <i class="fas fa-map-marker-alt"></i> 图标位置
+                                    </label>
+                                    <div class="format-selector">
+                                        <button class="format-btn active" data-position="top-right" title="右上角">
+                                            右上角
+                                        </button>
+                                        <button class="format-btn" data-position="bottom-center" title="底部居中">
+                                            底部居中
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="social-icons-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 5px;">
                                     <div class="social-icon-item" data-icon="gongzhonghao" title="公众号">
                                         <img src="assets/icons/gongzhonghao.png" alt="公众号">
                                     </div>
