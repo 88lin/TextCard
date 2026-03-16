@@ -485,6 +485,14 @@ class CanvasRenderer {
         const fontFamily = config.fontFamily === 'inherit' ? "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif" : (config.fontFamily || "sans-serif");
         const template = TemplateDefinitions[templateId];
 
+        // 如果社交图标在底部居中，则将签名上移，确保图标在最底部且紧密连接
+        let bottomOffset = 0;
+        if (config.hasSocialIcons && config.selectedSocialIcons && config.selectedSocialIcons.length > 0 && config.socialIconPosition === 'bottom-center') {
+            // 针对特定模板（备忘录、大厂文档、苏黎世、星光质感）增加额外偏移，防止与自带 UI 重叠
+            const extraTemplates = ['ios-memo', 'pro-doc', 'swiss-studio', 'starry-night'];
+            bottomOffset = extraTemplates.includes(templateId) ? 35 : 12; 
+        }
+
         ctx.save();
         if (sigStyle === 'terminal') {
             let barBg = '#222';
@@ -497,21 +505,21 @@ class CanvasRenderer {
 
             const barHeight = 40;
             ctx.fillStyle = barBg;
-            ctx.fillRect(0, height - barHeight, width, barHeight);
+            ctx.fillRect(0, height - barHeight - bottomOffset, width, barHeight);
             ctx.font = '700 13px monospace'; 
             ctx.textBaseline = 'middle';
             ctx.fillStyle = cursorColor; 
             ctx.textAlign = 'left';
-            ctx.fillText('> _', 25, height - barHeight / 2);
+            ctx.fillText('> _', 25, height - barHeight / 2 - bottomOffset);
             ctx.fillStyle = sigColor; 
             ctx.textAlign = 'right';
-            ctx.fillText(sigText, width - 25, height - barHeight / 2);
+            ctx.fillText(sigText, width - 25, height - barHeight / 2 - bottomOffset);
         } else if (sigStyle === 'modern-pill') {
             ctx.font = `600 13px ${fontFamily}`;
             const metrics = ctx.measureText(sigText);
             const pillWidth = metrics.width + 40;
             const pillHeight = 30;
-            const pillY = height - 42;
+            const pillY = height - 42 - bottomOffset;
             CanvasUtils.drawRoundedRect(ctx, (width - pillWidth) / 2, pillY, pillWidth, pillHeight, 15, sigColor);
             ctx.fillStyle = '#ffffff';
             ctx.textAlign = 'center';
@@ -521,7 +529,7 @@ class CanvasRenderer {
             const textWidth = ctx.measureText(sigText).width;
             const lineWidth = 40, gap = 12;
             const startX = (width - (textWidth + (lineWidth + gap) * 2)) / 2;
-            const y = height - 35;
+            const y = height - 35 - bottomOffset;
             ctx.strokeStyle = sigColor;
             ctx.globalAlpha = 0.4;
             ctx.lineWidth = 1;
@@ -534,13 +542,13 @@ class CanvasRenderer {
         } else if (sigStyle === 'glass-minimal') {
             ctx.font = `600 13px ${fontFamily}`;
             const boxWidth = ctx.measureText(sigText).width + 30;
-            const boxHeight = 32, y = height - 45;
+            const boxHeight = 32, y = height - 45 - bottomOffset;
             CanvasUtils.drawRoundedRect(ctx, (width - boxWidth) / 2, y, boxWidth, boxHeight, 16, 'rgba(255, 255, 255, 0.25)', true, 'rgba(255, 255, 255, 0.2)');
             ctx.fillStyle = sigColor; ctx.textAlign = 'center';
             ctx.fillText(sigText, width / 2, y + boxHeight / 2 + 5);
         } else {
             ctx.fillStyle = sigColor; ctx.font = `600 13px ${fontFamily}`; ctx.textAlign = 'center';
-            ctx.fillText(sigText, width / 2, height - 30);
+            ctx.fillText(sigText, width / 2, height - 30 - bottomOffset);
         }
         ctx.restore();
     }
@@ -576,7 +584,7 @@ class CanvasRenderer {
     }
 
     /**
-     * 绘制社交媒体图标（统一放在右上角，图片之上）
+     * 绘制社交媒体图标（支持右上角和底部居中两种位置）
      */
     drawSocialIcons(ctx, config, width, height, templateId) {
         if (!config.hasSocialIcons || !config.selectedSocialIcons || config.selectedSocialIcons.length === 0) {
@@ -588,17 +596,23 @@ class CanvasRenderer {
         const gap = 10;
         const totalWidth = icons.length * iconSize + (icons.length - 1) * gap;
         
-        // 采用极致贴边的 25px 边距，统一右上角绝对贴边
-        const edgeMargin = 25;
-        let x = width - totalWidth - edgeMargin;
-        let y = edgeMargin + (iconSize / 2); // 居中校准
+        const position = config.socialIconPosition || 'top-right';
+        let x, y;
+
+        if (position === 'bottom-center') {
+            const edgeMarginBottom = 20; // 进一步下移，贴近页面边缘
+            x = (width - totalWidth) / 2;
+            y = height - edgeMarginBottom; 
+        } else {
+            const edgeMargin = 40; 
+            x = width - totalWidth - edgeMargin;
+            y = edgeMargin + (iconSize / 2);
+        }
 
         ctx.save();
         
-        // 移除全局透明度，确保 20px 的小图标足够清晰 sharp
         ctx.globalAlpha = 1.0; 
         
-        // 为极小图标添加微妙的投影，增强在复杂背景下的可读性（大师级细节）
         ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
         ctx.shadowBlur = 4;
         ctx.shadowOffsetX = 0;

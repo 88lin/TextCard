@@ -387,7 +387,13 @@ const TemplateDefinitions = {
             const dateStr = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
             ctx.fillStyle = '#8E8E93'; ctx.font = '500 12px sans-serif'; ctx.textAlign = 'center'; ctx.fillText(dateStr, width / 2, 35);
             ctx.restore();
-            TemplateDefinitions._drawPageNumber(ctx, width, height, index, totalCount, config, { x: width - 25, y: height - 25 });
+
+            // 如果社交图标底部居中，页码稍微右移避开
+            const isBottomCenter = config.hasSocialIcons && config.selectedSocialIcons && config.selectedSocialIcons.length > 0 && config.socialIconPosition === 'bottom-center' && index === 0;
+            TemplateDefinitions._drawPageNumber(ctx, width, height, index, totalCount, config, { 
+                x: width - 25, 
+                y: isBottomCenter ? height - 15 : height - 25 
+            });
         },
         getTextStyles: (segment, config) => {
             const accentColor = config.accentColor || '#FF9500', textColor = config.textColor || '#1C1C1E';
@@ -417,11 +423,18 @@ const TemplateDefinitions = {
         },
         drawForeground: (ctx, width, height, index, totalCount, config) => {
             const accentColor = config.accentColor || '#FF4500', decorativeColor = '#1A1A1A';
+            const isBottomCenter = config.hasSocialIcons && config.selectedSocialIcons && config.selectedSocialIcons.length > 0 && config.socialIconPosition === 'bottom-center' && index === 0;
+
             ctx.save();
             ctx.fillStyle = decorativeColor; ctx.font = '700 10px Helvetica'; ctx.textAlign = 'right';
             ctx.fillText('REF. CH-8004', width - 25, 25);
-            ctx.beginPath(); ctx.rect(width - 40, height - 40, 15, 15); ctx.strokeStyle = accentColor; ctx.lineWidth = 2; ctx.stroke();
+            
+            // 如果底部居中有社交图标，则隐藏这个装饰框，防止重叠
+            if (!isBottomCenter) {
+                ctx.beginPath(); ctx.rect(width - 40, height - 40, 15, 15); ctx.strokeStyle = accentColor; ctx.lineWidth = 2; ctx.stroke();
+            }
             ctx.restore();
+
             TemplateDefinitions._drawPageNumber(ctx, width, height, index, totalCount, config, {
                 color: '#1A1A1A', font: '700 10px Helvetica', padZero: true, textAlign: 'left', x: 25, y: height - 25
             });
@@ -622,5 +635,113 @@ const TemplateDefinitions = {
             width: width - (padding * 2),
             height: height - topOffset - bottomOffset
         };
+    },
+
+    /**
+     * 星光质感 - 暗黑背景 + 星光粒子效果
+     */
+    'starry-night': {
+        _starCache: null,
+        getStars: function(width, height) {
+            if (this._starCache) return this._starCache;
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            
+            // 绘制星星
+            for (let i = 0; i < 150; i++) {
+                const x = Math.random() * width;
+                const y = Math.random() * height;
+                const size = Math.random() * 2 + 0.5;
+                const opacity = Math.random() * 0.8 + 0.2;
+                
+                ctx.beginPath();
+                ctx.arc(x, y, size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.fill();
+                
+                // 某些星星有光晕
+                if (Math.random() > 0.7) {
+                    const glow = ctx.createRadialGradient(x, y, 0, x, y, size * 4);
+                    glow.addColorStop(0, `rgba(255, 255, 255, ${opacity * 0.3})`);
+                    glow.addColorStop(1, 'transparent');
+                    ctx.fillStyle = glow;
+                    ctx.fillRect(x - size * 4, y - size * 4, size * 8, size * 8);
+                }
+            }
+            
+            this._starCache = canvas;
+            return canvas;
+        },
+        getContentBox: (config, width, height) => {
+            const padding = parseFloat(config.textPadding) || 45;
+            const topMargin = 110, bottomMargin = config.hasSignature ? 80 : 60;
+            return { x: padding, y: topMargin, width: width - (padding * 2), height: height - topMargin - bottomMargin };
+        },
+        drawBackground: (ctx, width, height, config) => {
+            const accentColor = config.accentColor || '#fbbf24';
+            ctx.save();
+            
+            // 深邃夜空渐变
+            const bgGrad = ctx.createLinearGradient(0, 0, 0, height);
+            bgGrad.addColorStop(0, '#0c1445');
+            bgGrad.addColorStop(0.5, '#1a1a3e');
+            bgGrad.addColorStop(1, '#0f0f2d');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, width, height);
+            
+            // 绘制星星 - 使用模板内部方法
+            const starryTemplate = TemplateDefinitions['starry-night'];
+            const stars = starryTemplate.getStars(width, height);
+            ctx.drawImage(stars, 0, 0);
+            
+            // 月亮光晕
+            const moonGrad = ctx.createRadialGradient(width - 150, 100, 0, width - 150, 100, 200);
+            moonGrad.addColorStop(0, 'rgba(251, 191, 36, 0.15)');
+            moonGrad.addColorStop(1, 'transparent');
+            ctx.fillStyle = moonGrad;
+            ctx.fillRect(0, 0, width, height);
+            
+            ctx.restore();
+        },
+        drawForeground: (ctx, width, height, index, totalCount, config) => {
+            const accentColor = config.accentColor || '#fbbf24';
+            ctx.save();
+            
+            // 顶部装饰线
+            ctx.strokeStyle = accentColor;
+            ctx.globalAlpha = 0.4;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(45, 85);
+            ctx.lineTo(width - 45, 85);
+            ctx.stroke();
+            
+            // 星星图标
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = accentColor;
+            ctx.font = '600 12px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('✦ STARRY NIGHT', 45, 70);
+            
+            ctx.restore();
+            
+            TemplateDefinitions._drawPageNumber(ctx, width, height, index, totalCount, config, {
+                color: 'rgba(251, 191, 36, 0.6)',
+                font: '600 11px sans-serif'
+            });
+        },
+        getTextStyles: (segment, config) => {
+            const accentColor = config.accentColor || '#fbbf24';
+            const textColor = config.textColor || '#e2e8f0';
+            if (segment.fontWeight === '700' || segment.fontWeight === '800' || segment.isHighlight || segment.headingLevel) {
+                return { 
+                    textColor: accentColor,
+                    highlightColor: 'rgba(251, 191, 36, 0.2)'
+                };
+            }
+            return { textColor };
+        }
     }
 };
