@@ -4,7 +4,9 @@
 
 本指南将帮助您快速上手，掌握如何利用本工具创作出极具吸引力的文字内容。
 
-🌐 **访问官网**：https://xhs-textcard.site
+🌐 **官方在线版**：https://xhs-textcard.site/
+
+📖 **使用指南**：https://xhs-textcard.site/guide.html
 
 ## 🌟 核心功能概览
 
@@ -83,6 +85,6 @@
 
 ## 结语
 
-XHS-TextCard 让创作者回归内容本身，排版这种繁琐的工作，交给我们就好了。
+XHS-TextCard 开源版让创作者回归内容本身：手写 Markdown、本地渲染、高清导出。需要把原始文案一键整理成小红书结构时，可以使用官方在线版的 AI 智能排版增强能力。
 
 祝您创作愉快！
