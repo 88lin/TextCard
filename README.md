@@ -2,7 +2,7 @@
 
 <div align="center">
 
-**面向小红书创作者的 Markdown / AI 排版文字卡片工具**
+**🎯 面向小红书创作者的 Markdown / AI 排版文字卡片工具**
 
 把长文、笔记、教程和观点稿快速生成 3:4 高清系列卡片，支持智能分页、模板切换、本地 Canvas 渲染和批量导出。
 
@@ -10,7 +10,7 @@
 [![Static Site](https://img.shields.io/badge/Type-Static%20Site-success.svg)]()
 [![Canvas Render](https://img.shields.io/badge/Render-Canvas-ff69b4.svg)]()
 
-[在线体验](https://88lin.github.io/TextCard-Studio/) · [打开编辑器](https://88lin.github.io/TextCard-Studio/editor.html) · [使用指南](https://88lin.github.io/TextCard-Studio/guide.html) · [茉灵智库](https://blog.88lin.eu.org)
+🌐 [在线体验](https://88lin.github.io/TextCard-Studio/) | 🚀 [打开编辑器](https://88lin.github.io/TextCard-Studio/editor.html) | 📖 [使用指南](https://88lin.github.io/TextCard-Studio/guide.html)
 
 </div>
 
@@ -147,13 +147,6 @@ TextCard-Studio/
 TextCard Studio 的基础编辑、分页、预览和导出流程均在浏览器本地完成。正文内容不会因为生成图片而上传到服务器。
 
 如果你在自己的部署中接入 AI 排版、云端存储或自动化接口，请根据实际功能补充隐私说明和服务条款。
-
-## 作者
-
-- 项目：TextCard Studio
-- 作者：茉灵智库
-- 个人网站：<https://blog.88lin.eu.org>
-- GitHub：<https://github.com/88lin/TextCard-Studio>
 
 ---
 
