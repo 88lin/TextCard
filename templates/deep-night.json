@@ -1,7 +1,7 @@
 {
     "name": "暗夜深思",
     "description": "深夜里的理性能量，沉浸式深度思考空间",
-    "author": "geekfoxcharlie",
+    "author": "茉灵智库",
     "version": "1.3",
     "config": {
     "coverImage": "assets/cover-deep-night.jpg",
@@ -14,10 +14,10 @@
         "textPadding": 40,
         "fontFamily": "-apple-system, system-ui, sans-serif",
         "hasWatermark": false,
-        "watermarkText": "极客狐",
+        "watermarkText": "茉灵智库",
         "watermarkColor": "rgba(255,255,255,0.03)",
         "hasSignature": true,
-        "signatureText": "极客狐",
+        "signatureText": "茉灵智库",
         "signatureColor": "#39FF14",
         "signaturePosition": "bottom",
         "signatureStyle": "terminal",

@@ -135,6 +135,18 @@ class CanvasTextEngine {
         if (!token) return layouts;
 
         switch (token.type) {
+            case 'centerBlock': {
+                // 内部 tokens 是块级 token（paragraph, heading 等），逐个布局并标记居中
+                const childTokens = token.tokens || [];
+                for (const child of childTokens) {
+                    const childLayouts = await this.layoutToken(child);
+                    for (const layout of childLayouts) {
+                        layout.align = 'center';
+                        layouts.push(layout);
+                    }
+                }
+                break;
+            }
             case 'image': {
                 const imgData = await this.measureImage(token.href);
                 const marginTop = 10, marginBottom = 20;
@@ -296,6 +308,13 @@ class CanvasTextEngine {
                 if (token.type === 'del' || token.type === 'strikethrough') style.textDecoration = 'line-through';
                 if (token.type === 'highlight' || (token.raw && token.raw.startsWith('==') && token.raw.endsWith('=='))) {
                     style.isHighlight = true;
+                }
+
+                if (token.type === 'br') {
+                    if (currentLine.length > 0) lines.push(currentLine);
+                    currentLine = [];
+                    currentLineWidth = 0;
+                    continue;
                 }
 
                 if (token.tokens && token.tokens.length > 0) {

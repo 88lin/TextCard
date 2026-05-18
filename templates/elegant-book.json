@@ -1,7 +1,7 @@
 {
   "name": "书籍内页",
   "description": "优雅的泛黄纸张与衬线体，复刻经典出版物质感",
-  "author": "geekfoxcharlie",
+  "author": "茉灵智库",
   "version": "1.0",
   "config": {
     "coverImage": "assets/cover-elegant-book.jpg",
@@ -14,10 +14,10 @@
     "textPadding": 55,
     "fontFamily": "'Noto Serif SC', 'Source Han Serif SC', serif",
     "hasWatermark": false,
-    "watermarkText": "极客狐",
+    "watermarkText": "茉灵智库",
     "watermarkColor": "rgba(0, 0, 0, 0.02)",
     "hasSignature": true,
-    "signatureText": "极客狐",
+    "signatureText": "茉灵智库",
     "signatureColor": "#A09A8E",
     "signaturePosition": "bottom",
     "signatureStyle": "elegant-serif",

@@ -1,7 +1,7 @@
 {
   "name": "效率笔记",
   "description": "极简知识库风格，带面包屑导航，适合硬核干货输出",
-  "author": "geekfoxcharlie",
+  "author": "茉灵智库",
   "version": "1.0",
   "config": {
     "coverImage": "assets/cover-notion-style.jpg",
@@ -14,10 +14,10 @@
     "textPadding": 40,
     "fontFamily": "ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, 'Apple Color Emoji', Arial, sans-serif",
     "hasWatermark": false,
-    "watermarkText": "极客狐",
+    "watermarkText": "茉灵智库",
     "watermarkColor": "rgba(0, 0, 0, 0.03)",
     "hasSignature": true,
-    "signatureText": "极客狐",
+    "signatureText": "茉灵智库",
     "signatureColor": "#9B9A97",
     "signaturePosition": "bottom",
     "signatureStyle": "minimal",

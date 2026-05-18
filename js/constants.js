@@ -11,7 +11,7 @@ const OUTPUT_WIDTH = 1242;
 const OUTPUT_HEIGHT = 1656;
 
 // 默认文案
-const DEFAULT_BRAND_TEXT = '极客狐';
+const DEFAULT_BRAND_TEXT = '茉灵智库';
 const DEFAULT_WATERMARK_OPACITY = 0.1;
 const DEFAULT_DEBOUNCE_DELAY = 300;
 const DEFAULT_COVER_IMAGE = 'assets/default-cover.jpg';

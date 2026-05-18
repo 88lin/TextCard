@@ -1,12 +1,12 @@
-# XHS-TextCard - 小红书文字卡片生成器 | 开源免费的 Markdown 转图片工具
+#  开源小红书文字卡片生成器 | Markdown 转图片工具
 
 <div align="center">
 
-**🎯 专为小红书创作者打造的智能排版神器**
+**🎯 专为小红书创作者打造的纯前端文字卡片工具**
 
-一键将深度长文转化为精美系列图片，支持 Markdown 语法、智能分页、多款大师级模板
+一键将 Markdown 长文转化为精美系列图片，支持智能分页、12 款大师级模板、本地 Canvas 渲染
 
-**零后端 · 零上传 · 零费用 · 隐私安全**
+**开源本地版 · 零后端 · 零上传 · 隐私安全**
 
 [![GitHub Stars](https://img.shields.io/github/stars/88lin/TextCard?style=social)](https://github.com/88lin/TextCard)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -16,6 +16,21 @@
 🌐 **[在线演示](https://88lin.github.io/TextCard)** | 📖 **[使用文档](#-快速开始)** | 💬 **[反馈建议](https://github.com/88lin/TextCard/issues)**
 
 </div>
+
+---
+
+## 官方版本说明
+
+本仓库是 **XHS-TextCard Open Source Edition**，保持纯前端、零后端、无构建流程：所有 Markdown 解析、分页、Canvas 渲染和图片导出都在浏览器本地完成。
+
+官方托管版地址：**[https://88lin.github.io/TextCard/](https://88lin.github.io/TextCard/)**
+
+| 版本 | 适合场景 | 能力边界 |
+|:-----|:---------|:---------|
+| **开源本地版** | 手写 Markdown、本地渲染、模板定制、高清导出 | 不包含后端、账号、API Key、AI 调用或付费逻辑 |
+| **官方在线版** | 原始文案一键排版、飞书批量处理、API 自动化 | 在本地渲染能力之上提供 AI 智能排版等云端增强能力 |
+
+如果你只需要本地 Markdown 转图片，直接使用本仓库即可；如果你希望把无格式原文自动整理成小红书风格标题、分段、重点和 emoji，可使用 **[XHS-TextCard 官方在线版](https://88lin.github.io/TextCard/)**。
 
 ---
 
@@ -32,7 +47,7 @@
 
 ---
 
-## ✨ 为什么选择 XHS-TextCard
+## ✨ 为什么选择 XHS-TextCard 开源版
 
 作为小红书创作者，您是否遇到过这些困扰？
 
@@ -41,16 +56,16 @@
 | 手动分割图片耗时耗力 | **智能分页算法**，自动计算最佳分割点 |
 | 排版风格参差不齐 | **多款大师级模板**，一键统一视觉 |
 | 内容易被抄袭搬运 | **专属签名 + 防盗水印**，保护原创内容 |
-| 在线工具卡顿收费 | **完全本地运行**，零费用零等待 |
+| 在线工具卡顿收费 | **完全本地运行**，零等待，基础编辑永久免费 |
 | 导出图片模糊变形 | **Canvas 像素级渲染**，1242×1656 高清输出 |
 | 隐私内容泄露风险 | **不上传云端**，数据 100% 安全 |
 
-### 🏆 本地工具 vs 云端工具对比
+### 🏆 开源本地版 vs 云端工具对比
 
 | 对比维度 | 🌐 云端工具 | 💻 XHS-TextCard 本地工具 |
 |:--------|:----------|:----------------------|
 | **隐私保护** | ❌ 需上传内容到服务器 | ✅ 所有数据在浏览器本地处理 |
-| **使用成本** | ❌ 高级功能收费/订阅制 | ✅ 完全免费开源 |
+| **使用成本** | ❌ 高级功能收费/订阅制 | ✅ 开源本地功能免费使用 |
 | **网络依赖** | ❌ 必须联网使用 | ✅ 离线可用 |
 | **处理速度** | ❌ 受网络速度影响 | ✅ 毫秒级实时预览 |
 | **数据留存** | ❌ 内容可能被平台留存 | ✅ 关闭浏览器即清除 |
@@ -58,7 +73,7 @@
 
 ---
 
-## 🎨 多款大师级小红书文字卡片模板
+## 🎨 12 款大师级小红书文字卡片模板
 
 <div align="center">
 
@@ -86,7 +101,7 @@
 |:----|:-----|
 | **Canvas 渲染** | 放弃不稳定 DOM，采用纯 Canvas 绘制，文字锐利无锯齿 |
 | **智能分页** | TextSplitter 算法精准计算，支持 `---` 强制分页 |
-| **Markdown 全支持** | 标题、加粗、==高亮==、*斜体*、~~删除线~~、`代码` |
+| **Markdown 全支持** | 标题、加粗、==高亮==、*斜体*、~~删除线~~、`代码`、`::: center ... :::` 居中块 |
 | **黄金比例** | 3:4 比例，1242×1656 高清输出，完美适配小红书 |
 
 ### 🎨 深度视觉定制
@@ -114,21 +129,19 @@
 
 ### [🎉 立即体验 XHS-TextCard 在线版](https://88lin.github.io/TextCard)
 
-**无需安装 · 即开即用 · 完全免费**
+**无需安装 · 即开即用 · 手写 Markdown 免费 · AI 排版为官方增强能力**
 
 </div>
 
-### 方式二：本地使用
+### 方式二：本地使用（纯前端）
 
 ```bash
 # 1. 克隆项目
 git clone https://github.com/88lin/TextCard.git
 cd XHS-TextCard
 
-# 2. 启动本地服务器（任选其一）
-python -m http.server 8000          # Python 3
-python -m SimpleHTTPServer 8000     # Python 2
-npx serve .                         # Node.js
+# 2. 启动本地服务器（推荐 Python，无需 npm）
+python -m http.server 8000
 
 # 3. 浏览器访问
 open http://localhost:8000/editor.html
@@ -141,6 +154,8 @@ open http://localhost:8000/editor.html
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/88lin/TextCard)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/88lin/TextCard)
 [![Deploy to GitHub Pages](https://img.shields.io/badge/Deploy%20to-GitHub%20Pages-blue?logo=github)](https://pages.github.com/)
+
+> 本仓库部署后仍是纯静态站点。AI 智能排版、飞书自动化和 API 能力由官方在线版提供：<https://88lin.github.io/TextCard/>
 
 ---
 
@@ -182,19 +197,22 @@ templates/
 | 技巧 | 说明 |
 |:-----|:-----|
 | **`---` 强制分页** | 在需要切断的地方输入三个短横线 |
+| **`::: center ... :::` 居中块** | 在块内输入正文内容，渲染为居中段落 |
 | **`↵↵` 智能分段** | 双回车分隔段落，系统优先在段落间分页 |
 | **参数微调** | 先选模板再调参数，效率更高 |
 | **封面设置** | 开启封面选项，系列内容更专业 |
 | **滚动锁定** | 修改时预览区自动锁定，方便局部调整 |
+| **AI 排版增强** | 原始文案一键转 Markdown 可使用 [官方在线版](https://88lin.github.io/TextCard/) |
 
 ---
 
 ## 📋 版本信息
 
-- **当前版本**：v1.3
-- **作者**：[@geekfoxcharlie](https://github.com/geekfoxcharlie)
+- **当前版本**：v1.4 Open Source Edition
+- **作者**：[@茉灵智库](https://github.com/茉灵智库) (小红书: 茉灵智库)
 - **协议**：MIT License
-- **最后更新**：2026年3月
+- **官方在线版**：[https://88lin.github.io/TextCard/](https://88lin.github.io/TextCard/)
+- **最后更新**：2026年5月
 
 ### 🙏 致谢
 
@@ -211,8 +229,8 @@ templates/
 
 欢迎所有形式的贡献！
 
-- 🐛 **报告 Bug**：[提交 Issue](https://github.com/geekfoxcharlie/XHS-TextCard/issues/new)
-- 💡 **功能建议**：[参与讨论](https://github.com/geekfoxcharlie/XHS-TextCard/discussions)
+- 🐛 **报告 Bug**：[提交 Issue](https://github.com/88lin/TextCard/issues/new)
+- 💡 **功能建议**：[参与讨论](https://github.com/88lin/TextCard/discussions)
 - 🔧 **代码贡献**：Fork → 修改 → 提交 Pull Request
 - 📖 **文档改进**：帮助完善使用文档和 Wiki
 
@@ -220,9 +238,10 @@ templates/
 
 ## 📮 联系方式
 
-- **GitHub**：[@geekfoxcharlie](https://github.com/geekfoxcharlie)
-- **Email**：geekfoxcharlie@gmail.com
-- **小红书**：极客狐
+- **GitHub**：[@茉灵智库](https://github.com/茉灵智库)
+- **官方在线版**：[https://88lin.github.io/TextCard/](https://88lin.github.io/TextCard/)
+- **Email**：茉灵智库@gmail.com
+- **小红书**：茉灵智库
 
 ---
 
@@ -232,14 +251,14 @@ templates/
 
 **让更多人看到这款小红书文字卡片生成器**
 
-[![Star History Chart](https://api.star-history.com/svg?repos=geekfoxcharlie/XHS-TextCard&type=Date)](https://star-history.com/#geekfoxcharlie/XHS-TextCard&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=88lin/TextCard&type=Date)](https://star-history.com/#88lin/TextCard&Date)
 
 ---
 
-**XHS-TextCard - 小红书文字卡片生成器 | 开源免费的 Markdown 转图片工具**
+** 小红书文字卡片生成器 | 开源免费的 Markdown 转图片工具**
 
 *释放文字的力量，让排版不再成为负担*
 
-**Made with ❤️ by [geekfoxcharlie](https://github.com/geekfoxcharlie)**
+**Made with ❤️ by [茉灵智库](https://github.com/茉灵智库)**
 
 </div>
