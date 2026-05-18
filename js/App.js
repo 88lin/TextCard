@@ -376,6 +376,12 @@ class App {
         const scrollContainer = panel?.closest('.left-panel');
         if (!panel || !formatPanel || !scrollContainer) return;
 
+        const canScrollPanel = scrollContainer.scrollHeight > scrollContainer.clientHeight + 1;
+        if (!canScrollPanel) {
+            formatPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+        }
+
         const containerRect = scrollContainer.getBoundingClientRect();
         const targetRect = formatPanel.getBoundingClientRect();
         const topOffset = 4;
