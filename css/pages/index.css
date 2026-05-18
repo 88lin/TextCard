@@ -249,121 +249,19 @@
   flex-wrap: wrap;
 }
 
-.ai-demo {
-  width: min(980px, 100%);
-  margin: 56px auto 0;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 18px;
-  align-items: stretch;
-}
-
-.ai-demo-card,
-.ai-demo-arrow {
-  background: rgba(255, 255, 255, 0.68);
-  border: 1px solid rgba(255, 255, 255, 0.84);
-  border-radius: 24px;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
-  backdrop-filter: blur(30px) saturate(160%);
-  -webkit-backdrop-filter: blur(30px) saturate(160%);
-}
-
-.ai-demo-card {
-  padding: 22px;
-  text-align: left;
-}
-
-.ai-demo-label {
-  display: inline-flex;
-  margin-bottom: 12px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.05);
-  color: var(--landing-text-secondary);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.ai-demo-content {
-  color: var(--landing-text-main);
-  font-size: 14px;
-  line-height: 1.75;
-}
-
-.ai-demo-content p,
-.ai-demo-content ul {
-  margin: 8px 0;
-}
-
-.ai-demo-content ul {
-  padding-left: 18px;
-}
-
-.ai-demo-mark {
-  background: rgba(255, 214, 10, 0.36);
-  border-radius: 5px;
-  padding: 0 4px;
-}
-
-.ai-demo-arrow {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 116px;
-  padding: 18px 14px;
-  color: #111;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.ai-demo-arrow i {
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 8px;
-  border-radius: 50%;
-  color: #fff;
-  background: #111;
-}
-
-.official-note {
-  margin: 72px auto 0;
-  max-width: 920px;
-  padding: 28px;
-  border-radius: 28px;
-  background: rgba(17, 24, 39, 0.92);
-  color: #fff;
-  text-align: center;
-  box-shadow: 0 30px 80px rgba(17, 24, 39, 0.18);
-}
-
-.official-note p {
-  margin: 8px auto 18px;
-  max-width: 720px;
-  color: rgba(255, 255, 255, 0.76);
-  line-height: 1.7;
-}
-
-.official-note a {
-  color: #fff;
-  font-weight: 700;
-}
-
 @keyframes fadeUp {
   0% { opacity: 0; transform: translateY(40px); filter: blur(10px); }
   100% { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 
 .hero-title {
-  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  font-size: 5.75rem;
   font-weight: 800;
   line-height: 1.05;
-  letter-spacing: -0.05em;
+  letter-spacing: 0;
   margin-bottom: 32px;
   color: #111;
+  max-width: 980px;
 }
 
 .hero-title .accent {
@@ -388,6 +286,14 @@
   margin: 0 auto 56px;
   font-weight: 500;
   letter-spacing: -0.01em;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 /* === Buttons === */
@@ -551,32 +457,92 @@
 }
 
 @media (max-width: 768px) {
+  .landing-content {
+    padding: 0 18px;
+  }
+
+  .landing-nav {
+    height: auto;
+    min-height: 72px;
+    padding-top: 16px;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .landing-nav .brand {
+    font-size: 18px;
+    min-width: 0;
+  }
+
+  .landing-nav .nav-links {
+    gap: 12px;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .landing-nav .nav-links a,
+  .landing-nav .nav-links .contact-item {
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .hero-section {
+    padding: 56px 0 72px;
+  }
+
   .hero-title {
-    font-size: 3rem;
+    font-size: 3.6rem;
+    max-width: 100%;
+    word-break: keep-all;
   }
   
   .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    max-width: 34rem;
+    margin-bottom: 36px;
+  }
+
+  .hero-actions {
+    width: 100%;
+  }
+
+  .btn-hero,
+  .btn-secondary {
+    width: 100%;
+    max-width: 320px;
+    padding: 16px 24px;
+    font-size: 1rem;
   }
   
   .feature-card {
     padding: 32px;
   }
-  
-  .landing-nav {
-    height: 80px;
-  }
+}
 
+@media (max-width: 480px) {
   .landing-nav .nav-links {
-    gap: 14px;
-    font-size: 13px;
+    gap: 10px;
   }
 
-  .ai-demo {
-    grid-template-columns: 1fr;
+  .landing-nav .nav-links a span,
+  .landing-nav .nav-links .contact-item span {
+    display: none;
   }
 
-  .ai-demo-arrow {
-    min-width: 0;
+  .hero-pill {
+    max-width: 100%;
+    font-size: 0.8rem;
+    padding: 7px 12px;
+  }
+
+  .hero-title {
+    font-size: 2.72rem;
+    line-height: 1.08;
+    margin-bottom: 24px;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    line-height: 1.65;
   }
 }

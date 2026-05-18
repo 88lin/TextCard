@@ -3,12 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>使用指南 | XHS-TextCard 开源本地版</title>
-    <meta name="description" content="XHS-TextCard 开源本地版使用指南：学习 Markdown 语法、智能分页、模板选择、品牌签名、水印和 1242×1656 高清图片导出。官方在线版提供 AI 智能排版等增强能力。">
+    <title>使用指南｜TextCard Studio Markdown 转小红书图片</title>
+    <meta name="description" content="学习 TextCard Studio 的 Markdown 写法、智能分页、模板选择、品牌签名、水印、AI 排版文案导入和 1242×1656 小红书文字卡片导出流程。">
     <meta name="author" content="茉灵智库">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://88lin.github.io/TextCard/guide.html">
+    <link rel="author" href="https://blog.88lin.eu.org">
     <link rel="icon" href="logo.png" type="image/png">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://88lin.github.io/TextCard/guide.html">
+    <meta property="og:title" content="TextCard Studio 使用指南">
+    <meta property="og:description" content="从 Markdown 语法、智能分页到模板定制和高清导出，快速掌握小红书文字卡片制作流程。">
+    <meta property="og:site_name" content="TextCard Studio">
+    <meta property="og:image" content="https://88lin.github.io/TextCard/og-cover.png">
+    <meta property="og:locale" content="zh_CN">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "TextCard Studio 使用指南",
+      "description": "学习 Markdown 语法、智能分页、模板选择、品牌签名、水印和小红书文字卡片导出流程。",
+      "url": "https://88lin.github.io/TextCard/guide.html",
+      "inLanguage": "zh-CN",
+      "author": {
+        "@type": "Organization",
+        "name": "茉灵智库",
+        "url": "https://blog.88lin.eu.org"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "茉灵智库",
+        "url": "https://blog.88lin.eu.org"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "TextCard Studio",
+        "url": "https://88lin.github.io/TextCard/"
+      }
+    }
+    </script>
     <style>
         :root {
             --bg: #f8f9fb;
@@ -185,11 +218,11 @@
 <body>
     <header class="page-header">
         <div class="page-header-inner">
-            <a class="brand" href="index.html"><img src="logo.png" alt="XHS-TextCard"> XHS-TextCard</a>
+            <a class="brand" href="index.html"><img src="logo.png" alt="TextCard Studio"> TextCard Studio</a>
             <nav class="header-links" aria-label="页面导航">
                 <a href="editor.html">打开编辑器</a>
                 <a href="format-demo.html">排版示例</a>
-                <a href="https://88lin.github.io/TextCard/" target="_blank" rel="noopener">官方在线版</a>
+                <a href="index.html">首页</a>
                 <a href="https://github.com/88lin/TextCard" target="_blank" rel="noopener">GitHub</a>
             </nav>
         </div>
@@ -197,10 +230,10 @@
 
     <main class="container">
         <section class="hero">
-            <span class="eyebrow">Open Source Edition · 纯前端本地版</span>
-            <h1>XHS-TextCard 使用指南</h1>
-            <p>XHS-TextCard 开源版不需要登录、不需要后端、不上传内容。你只需要输入 Markdown，选择模板，浏览器会在本地 Canvas 中渲染并导出 1242×1656 高清图片。</p>
-            <p>如果你希望把无格式原文一键整理成小红书风格 Markdown，可使用 <a href="https://88lin.github.io/TextCard/" target="_blank" rel="noopener">XHS-TextCard 官方在线版</a> 的 AI 智能排版能力。</p>
+            <span class="eyebrow">纯前端在线工具</span>
+            <h1>TextCard Studio 使用指南</h1>
+            <p>TextCard Studio 不需要登录、不上传内容。你只需要输入 Markdown，选择模板，浏览器会在本地 Canvas 中渲染并导出 1242×1656 高清图片。</p>
+            <p>如果不确定应该怎么写 Markdown，可以先看 <a href="format-demo.html">排版示例</a>，再回到编辑器开始生成图片。AI 辅助排版适合输出结构化 Markdown，再交给编辑器预览和导出。</p>
         </section>
 
         <section class="grid" aria-label="核心能力">
@@ -251,15 +284,15 @@
             <div class="tile"><strong>空白模板</strong><p>适合从零开始做个人品牌统一视觉。</p></div>
         </div>
 
-        <h2>4. 开源版与官方在线版</h2>
+        <h2>4. 数据与导出说明</h2>
         <div class="card">
-            <p><strong>开源本地版：</strong>纯 HTML/CSS/JavaScript，无后端、无构建流程，专注手写 Markdown、本地渲染和图片导出。</p>
-            <p><strong>官方在线版：</strong>在本地渲染能力之上，提供 AI 智能排版、飞书多维表格批量流程、API 调用等云端增强能力。</p>
+            <p><strong>内容处理：</strong>编辑、预览和导出都在当前浏览器中完成，适合处理还没有发布的草稿。</p>
+            <p><strong>图片导出：</strong>默认输出 1242×1656 高清图片，可按当前选择的 PNG 或 JPEG 格式下载。</p>
+            <p><strong>AI 扩展：</strong>AI 排版适合放在输入前置环节，把原始文案整理成标题、段落、重点和列表；最终图片仍由编辑器统一渲染。</p>
         </div>
 
         <footer class="footer">
-            <p>XHS-TextCard Open Source Edition · Original project: <a href="https://github.com/88lin/TextCard" target="_blank" rel="noopener">github.com/88lin/TextCard</a></p>
-            <p>Official hosted version: <a href="https://88lin.github.io/TextCard/" target="_blank" rel="noopener">88lin.github.io/TextCard</a></p>
+            <p>TextCard Studio · Original project: <a href="https://github.com/88lin/TextCard" target="_blank" rel="noopener">github.com/88lin/TextCard</a></p>
         </footer>
     </main>
 </body>

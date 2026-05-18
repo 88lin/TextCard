@@ -3,33 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>工作台 | 小红书智能文字排版工具</title>
-    <meta name="description" content="XHS-TextCard 创作工作台是专为小红书等自媒体平台设计的在线纯前端文字排版工具。支持 Markdown 语法实时解析、智能长图分页、多款大师级内置模板、自定义品牌防盗水印等强大功能。纯本地渲染，保护隐私，助您零基础也能轻松制作爆款高颜值文字卡片。立即开始创作！">
+    <title>在线编辑器｜TextCard Studio 小红书文字卡片生成器</title>
+    <meta name="description" content="在 TextCard Studio 在线编辑器中输入 Markdown 或 AI 排版文案，选择模板并实时预览小红书文字卡片，支持签名、水印、封面和 1242×1656 高清导出。">
     <meta name="author" content="茉灵智库">
+    <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://88lin.github.io/TextCard/editor.html">
+    <link rel="author" href="https://blog.88lin.eu.org">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#ffffff">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://88lin.github.io/TextCard/editor.html">
-    <meta property="og:title" content="创作工作台 | 小红书智能文字排版工具">
-    <meta property="og:description" content="XHS-TextCard 创作工作台支持 Markdown 语法解析、多款大师级模板与品牌防盗水印。纯本地渲染，隐私零风险，零基础轻松制作小红书爆款卡片！">
-    <meta property="og:site_name" content="XHS-TextCard">
+    <meta property="og:title" content="在线编辑器｜TextCard Studio">
+    <meta property="og:description" content="输入 Markdown 或 AI 排版文案，实时预览并导出小红书文字卡片。支持模板、签名、水印、封面和高清批量下载。">
+    <meta property="og:site_name" content="TextCard Studio">
     <meta property="og:locale" content="zh_CN">
     <meta property="og:image" content="https://88lin.github.io/TextCard/og-cover.png">
     <meta property="og:image:width" content="2400">
     <meta property="og:image:height" content="1260">
-    <meta property="og:image:alt" content="XHS-TextCard 小红书文字卡片生成器工作台界面预览">
+    <meta property="og:image:alt" content="TextCard Studio 小红书文字卡片生成器工作台界面预览">
 
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "XHS-TextCard 工作台",
-      "description": "XHS-TextCard 的核心创作工具，支持将 Markdown 文字转化为精美的小红书卡片。",
+      "name": "TextCard Studio 工作台",
+      "description": "TextCard Studio 在线编辑器支持 Markdown 和 AI 排版文案预览，可生成适合小红书发布的高清文字卡片。",
+      "url": "https://88lin.github.io/TextCard/editor.html",
+      "inLanguage": "zh-CN",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "TextCard Studio",
+        "url": "https://88lin.github.io/TextCard/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "茉灵智库",
+        "url": "https://blog.88lin.eu.org"
+      },
       "breadcrumb": {
         "@type": "BreadcrumbList",
         "itemListElement": [{
@@ -66,7 +79,7 @@
     <link rel="apple-touch-icon" href="logo.png">
 </head>
 <body class="editor-page">
-    <h1 class="seo-visually-hidden">XHS-TextCard 创作工作台 - 免费小红书在线文字排版工具</h1>
+    <h1 class="seo-visually-hidden">TextCard Studio 创作工作台 - 免费小红书在线文字排版工具</h1>
     <div class="main-container">
         <!-- 左侧：输入区域 -->
         <div class="left-panel">
@@ -75,12 +88,11 @@
                     <i class="fas fa-home"></i>
                 </a>
                 <div style="display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 16px; margin-left: 12px;">
-                    <img src="logo.png" alt="XHS-TextCard" width="20" height="20">
+                    <img src="logo.png" alt="TextCard Studio" width="20" height="20">
                     工作台
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px; margin-left: auto; font-size: 13px;">
                     <a href="guide.html" target="_blank" rel="noopener" style="color: #6e6e73; text-decoration: none;">使用指南</a>
-                    <a href="https://88lin.github.io/TextCard/" target="_blank" rel="noopener" style="color: #0071e3; text-decoration: none; font-weight: 600;">官方 AI 排版版</a>
                 </div>
                 <button class="edit-mode-toggle" id="edit-mode-toggle" title="专注编辑模式">
                     <i class="fas fa-expand-alt"></i>

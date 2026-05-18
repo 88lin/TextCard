@@ -3,115 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小红书文字卡片生成器·Markdown 转图片</title>
-    <meta name="description" content="一款纯前端开源小红书文字卡片生成器。支持 Markdown 排版、 智能分页、12 款大师级模板、本地 Canvas 渲染、品牌签名防盗水印。一键导出 1242×1656 高清图片。官方在线版提供 AI 智能排版、飞书批量集成和 API 增强能力。">
-    <meta name="keywords" content="小红书文字卡片生成器,小红书排版工具,文字转图片,Markdown转图片,创作者神器,排版设计,社交媒体运营">
+    <title>TextCard Studio｜小红书文字卡片生成器 Markdown/AI 排版</title>
+    <meta name="description" content="TextCard Studio 是面向小红书创作者的文字卡片生成器，支持 Markdown 和 AI 排版文案预览、智能分页、模板定制、本地 Canvas 渲染，一键导出 1242×1656 高清图片。">
     <meta name="author" content="茉灵智库">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://88lin.github.io/TextCard/">
+    <link rel="author" href="https://blog.88lin.eu.org">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#ffffff">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://88lin.github.io/TextCard/">
-    <meta property="og:title" content="小红书智能文字转图片工具 - 创作者排版神器">
-    <meta property="og:description" content="纯前端开源小红书文字卡片生成器，支持 Markdown 智能分页、12款大师级模板、本地 Canvas 渲染、品牌签名防盗水印。专为内容创作者打造，一键将长文转化为高颜值社交媒体图片，创作者排版神器！">
-    <meta property="og:site_name" content="XHS-TextCard">
+    <meta property="og:title" content="TextCard Studio｜小红书文字卡片生成器">
+    <meta property="og:description" content="用 Markdown 或 AI 排版文案生成小红书文字卡片，支持智能分页、模板定制、本地 Canvas 渲染和高清批量导出。">
+    <meta property="og:site_name" content="TextCard Studio">
     <meta property="og:image" content="https://88lin.github.io/TextCard/og-cover.png">
     <meta property="og:image:width" content="2400">
     <meta property="og:image:height" content="1260">
-    <meta property="og:image:alt" content="XHS-TextCard 小红书文字卡片生成器界面预览">
+    <meta property="og:image:alt" content="TextCard Studio 小红书文字卡片生成器界面预览">
     <meta property="og:locale" content="zh_CN">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://88lin.github.io/TextCard/">
-    <meta name="twitter:title" content="小红书文字转图片工具｜XHS-TextCard">
-    <meta name="twitter:description" content="专为小红书打造的文字转图片工具，支持 Markdown 智能分页、12 款模板、本地 Canvas 渲染。官方在线版提供 AI 智能排版增强能力。">
+    <meta name="twitter:title" content="TextCard Studio｜小红书文字卡片生成器">
+    <meta name="twitter:description" content="支持 Markdown 与 AI 排版文案预览，智能分页生成 1242×1656 小红书文字卡片。">
     <meta name="twitter:image" content="https://88lin.github.io/TextCard/og-cover.png">
     <meta name="twitter:image:alt" content="小红书文字转图片工具预览图">
 
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "XHS-TextCard",
-      "alternateName": [
-        "小红书文字卡片生成器",
-        "小红书排版工具",
-        "XHS Card Generator",
-        "小红书 Markdown 转图片工具"
-      ],
-      "url": "https://88lin.github.io/TextCard/",
-      "logo": "https://88lin.github.io/TextCard/favicon.svg",
-      "image": "https://88lin.github.io/TextCard/og-cover.png",
-      "screenshot": [
-        "https://88lin.github.io/TextCard/assets/template-minimalist.png",
-        "https://88lin.github.io/TextCard/assets/template-gradient.png",
-        "https://88lin.github.io/TextCard/assets/template-dark.png"
-      ],
-      "description": "免费开源的小红书文字卡片生成器，支持 Markdown 智能自动分页、12 大师级模板、本地 Canvas 渲染、品牌签名与防盗水印。纯浏览器本地运行，隐私零风险，一键将长文转化为高清图片。",
-      "applicationCategory": "DesignApplication, MultimediaApplication",
-      "operatingSystem": "Any",
-      "browserRequirements": "Requires JavaScript. Requires HTML5 Canvas.",
-      "softwareVersion": "1.4.0",
-      "datePublished": "2024-01-01",
-      "dateModified": "2026-05-17",
-      "fileFormat": "text/html",
-      "featureList": [
-        "智能自动分页算法",
-        "Markdown 语法支持",
-        "12 款大师级设计模板",
-        "品牌签名与防盗水印",
-        "1242×1656 高清图片导出",
-        "纯本地运行零数据上传",
-        "实时预览编辑",
-        "官方在线版支持 AI 智能排版"
-      ],
-      "screenshot": "https://88lin.github.io/TextCard/og-cover.png",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "CNY",
-        "availability": "https://schema.org/InStock",
-        "priceValidUntil": "2099-12-31"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "ratingCount": "128",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
-      "author": {
-        "@type": "Person",
-        "name": "茉灵智库",
-        "url": "https://88lin.github.io/gzh/index.html"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "XHS-TextCard",
-        "url": "https://88lin.github.io/TextCard/",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://88lin.github.io/TextCard/rednote.png",
-          "width": 1200,
-          "height": 630
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://88lin.github.io/TextCard/#website",
+          "name": "TextCard Studio",
+          "url": "https://88lin.github.io/TextCard/",
+          "inLanguage": "zh-CN",
+          "publisher": {
+            "@id": "https://blog.88lin.eu.org/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://blog.88lin.eu.org/#organization",
+          "name": "茉灵智库",
+          "url": "https://blog.88lin.eu.org",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://88lin.github.io/TextCard/logo.png"
+          },
+          "sameAs": [
+            "https://blog.88lin.eu.org",
+            "https://github.com/88lin/TextCard"
+          ]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://88lin.github.io/TextCard/#app",
+          "name": "TextCard Studio",
+          "alternateName": [
+            "小红书文字卡片生成器",
+            "小红书排版工具",
+            "Markdown 转图片工具",
+            "AI 排版文字卡片工具"
+          ],
+          "url": "https://88lin.github.io/TextCard/",
+          "logo": "https://88lin.github.io/TextCard/favicon.svg",
+          "image": "https://88lin.github.io/TextCard/og-cover.png",
+          "screenshot": [
+            "https://88lin.github.io/TextCard/assets/template-minimalist.png",
+            "https://88lin.github.io/TextCard/assets/template-gradient.png",
+            "https://88lin.github.io/TextCard/assets/template-dark.png"
+          ],
+          "description": "TextCard Studio 是面向小红书创作者的文字卡片生成器，支持 Markdown 和 AI 排版文案预览、智能分页、模板定制、本地 Canvas 渲染与高清图片导出。",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Any",
+          "browserRequirements": "Requires JavaScript and HTML5 Canvas.",
+          "softwareVersion": "1.4.0",
+          "datePublished": "2024-01-01",
+          "dateModified": "2026-05-18",
+          "isAccessibleForFree": true,
+          "featureList": [
+            "Markdown 语法支持",
+            "AI 排版文案预览",
+            "智能自动分页",
+            "12 款设计模板",
+            "品牌签名与防盗水印",
+            "1242×1656 高清图片导出",
+            "浏览器本地 Canvas 渲染"
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "CNY",
+            "availability": "https://schema.org/InStock"
+          },
+          "creator": {
+            "@id": "https://blog.88lin.eu.org/#organization"
+          },
+          "publisher": {
+            "@id": "https://blog.88lin.eu.org/#organization"
+          },
+          "copyrightHolder": {
+            "@id": "https://blog.88lin.eu.org/#organization"
+          },
+          "codeRepository": "https://github.com/88lin/TextCard",
+          "sameAs": [
+            "https://github.com/88lin/TextCard",
+            "https://blog.88lin.eu.org"
+          ],
+          "isBasedOn": "https://github.com/88lin/TextCard"
         }
-      },
-      "copyrightHolder": {
-        "@type": "Person",
-        "name": "茉灵智库"
-      },
-      "codeRepository": "https://github.com/88lin/TextCard",
-      "sameAs": [
-        "https://github.com/88lin/TextCard",
-        "https://88lin.github.io/TextCard"
-      ],
-      "isBasedOn": "https://github.com/88lin/TextCard"
+      ]
     }
     </script>
 
@@ -153,7 +160,7 @@
         },
         {
           "@type": "Question",
-          "name": "XHS-TextCard 支持 Markdown 语法吗？",
+          "name": "TextCard Studio 支持 Markdown 语法吗？",
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "完美支持标题、加粗、高亮、列表等 Markdown 语法，让文字更具表现力。"
@@ -177,10 +184,10 @@
         },
         {
           "@type": "Question",
-          "name": "XHS-TextCard 是否免费？有水印吗？",
+          "name": "TextCard Studio 是否免费？有水印吗？",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "开源版完全免费，保持纯前端和本地渲染。官方在线版提供 AI 智能排版、飞书批量集成和 API 等增强能力。"
+            "text": "可以直接在浏览器中免费使用，内容在本地完成渲染和导出。开启签名或水印后，图片会带有你设置的品牌标识。"
           }
         }
       ]
@@ -200,21 +207,12 @@
         <div class="landing-content">
             <nav class="landing-nav">
                 <div class="brand">
-                    <img src="logo.png" alt="XHS-TextCard" width="24" height="24">
-                    XHS-TextCard
+                    <img src="logo.png" alt="TextCard Studio" width="24" height="24">
+                    TextCard Studio
                 </div>
                 <div class="nav-links">
                     <a href="guide.html">
                         <i class="fas fa-book"></i> 使用指南
-                    </a>
-                    <a href="format-demo.html">
-                        <i class="fas fa-star"></i> 排版示例
-                    </a>
-                    <a href="https://88lin.github.io/TextCard/" target="_blank" rel="noopener">
-                        <i class="fas fa-wand-magic-sparkles"></i> 官方在线版
-                    </a>
-                    <a href="https://blog.88lin.eu.org">
-                        <i class="fas fa-blog"></i> 个人博客
                     </a>
                     <span class="contact-item qr-trigger">
                         <i class="fas fa-book-reader"></i> 茉灵智库
@@ -227,16 +225,16 @@
             </nav>
             
             <main class="hero-section">
-                <div class="hero-pill"><span class="hero-pill-dot"></span>Open Source Edition · 纯前端本地版</div>
-                <h1 class="hero-title"><span class="seo-visually-hidden">XHS-TextCard：开源小红书文字卡片生成器</span>释放文字的力量<br><span class="accent">让排版成为艺术</span></h1>
-                <p class="hero-subtitle">输入 Markdown，选择模板，浏览器本地 Canvas 一键生成 1242×1656 高清小红书文字卡片。无需后端，不上传内容。</p>
+                <div class="hero-pill"><span class="hero-pill-dot"></span>TextCard Studio · AI 辅助排版</div>
+                <h1 class="hero-title">释放文字的力量<br><span class="accent">生成高颜值小红书卡片</span></h1>
+                <p class="hero-subtitle">输入 Markdown 或 AI 排版后的结构化文案，选择模板，浏览器本地 Canvas 一键生成 1242×1656 高清小红书文字卡片。编辑器负责统一预览、微调和导出。</p>
                 <div class="hero-actions">
                     <a href="editor.html" class="btn-hero">
-                        打开本地编辑器
+                        开始创作
                         <i class="fas fa-arrow-right"></i>
                     </a>
-                    <a href="https://88lin.github.io/TextCard/" class="btn-secondary" target="_blank" rel="noopener">
-                        体验官方 AI 排版版
+                    <a href="format-demo.html" class="btn-secondary">
+                        查看排版示例
                     </a>
                 </div>
             </main>
@@ -245,10 +243,10 @@
             <section class="seo-content" style="max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; text-align: center;">
                 <h2 style="font-size: 1.8rem; color: var(--landing-text-main); margin-bottom: 1.5rem; font-weight: 600;">为什么需要小红书文字卡片生成器？</h2>
                 <p style="color: var(--landing-text-secondary); line-height: 1.8; margin-bottom: 1.5rem; font-size: 0.95rem;">
-                    在小红书内容创作中，图文并茂的笔记往往能获得更高的曝光率和互动量。传统截图无法保证排版美观，复杂图像编辑软件又费时费力。<strong>XHS-TextCard 小红书文字卡片生成器</strong>是一款专为创作者打造的<strong>开源小红书文字卡片工具</strong>，让你无需设计基础，也能快速生成专业级文字卡片。
+                    在小红书内容创作中，图文并茂的笔记往往能获得更高的曝光率和互动量。传统截图无法保证排版美观，复杂图像编辑软件又费时费力。<strong>TextCard Studio 小红书文字卡片生成器</strong>是一款专为创作者打造的<strong>小红书文字卡片工具</strong>，让你无需设计基础，也能快速生成专业级文字卡片。
                 </p>
                 <p style="color: var(--landing-text-secondary); line-height: 1.8; margin-bottom: 1.5rem; font-size: 0.95rem;">
-                    XHS-TextCard 支持<strong>小红书 Markdown 转图片</strong>，解析标题、加粗、高亮、引用、列表和图片等语法。配合智能分页算法，长文会自动拆分为多张 3:4 比例高清卡片（1242×1656px），并支持专属签名、防盗水印和模板级视觉定制。
+                    TextCard Studio 支持<strong>小红书 Markdown 转图片</strong>，解析标题、加粗、高亮、引用、列表和图片等语法。配合智能分页算法，长文会自动拆分为多张 3:4 比例高清卡片（1242×1656px），并支持专属签名、防盗水印和模板级视觉定制。
                 </p>
             </section>
 
@@ -256,7 +254,7 @@
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-magic"></i></div>
                     <h3>智能自动分页</h3>
-                    <p>自动拆分长文，智能掌控阅读节奏</p>
+                    <p>自动拆分长文，承接手写 Markdown 和 AI 排版后的结构化内容</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-palette"></i></div>
@@ -273,7 +271,7 @@
             <section class="template-showcase" style="padding: 2rem 0; margin-top: 2rem;">
                 <div style="max-width: 1000px; margin: 0 auto;">
                     <h2 style="text-align: center; margin-bottom: 1rem; color: var(--landing-text-main); font-size: 2rem; font-weight: 600;">12 款大师级小红书文字卡片模板，一键切换</h2>
-                    <p style="text-align:center; color: var(--landing-text-secondary); margin-bottom: 2.5rem; font-size: 0.95rem;">开源版内置多套模板，可本地调整字号、行距、背景、签名和水印。</p>
+                    <p style="text-align:center; color: var(--landing-text-secondary); margin-bottom: 2.5rem; font-size: 0.95rem;">内置多套模板，可直接调整字号、行距、背景、签名和水印。</p>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
                         <!-- 风格 1 -->
                         <div style="background: rgba(255,255,255,0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.5); transition: transform 0.3s ease;">
@@ -313,7 +311,7 @@
             </section>
             <!-- Technical Context (Re-positioned & Styled for Blend-in) -->
             <section class="ai-context" aria-label="核心技术" style="margin: 4rem auto; max-width: 800px; text-align: center;">
-                <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--landing-text-main); font-weight: 600;">为什么选择 XHS-TextCard？</h3>
+                <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--landing-text-main); font-weight: 600;">为什么选择 TextCard Studio？</h3>
                 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem;">
                     <div style="flex: 1; min-width: 200px;">
                         <div style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--landing-accent);">⚡️</div>
@@ -354,14 +352,14 @@
                     </div>
                     <div class="faq-item">
                         <h4 style="margin-bottom: 0.8rem; color: var(--landing-text-main); font-weight: 600;">是否免费？有水印吗？</h4>
-                        <p style="font-size: 0.95rem; line-height: 1.6; color: var(--landing-text-secondary);">开源版完全免费并保持纯前端。需要 AI 智能排版、飞书批量流程或 API 时，可使用官方在线版。</p>
+                        <p style="font-size: 0.95rem; line-height: 1.6; color: var(--landing-text-secondary);">可以直接在浏览器中免费使用，签名和水印都由你自己设置，不会额外添加固定水印。</p>
                     </div>
                 </div>
             </section>
 
             <footer style="text-align: center; padding: 2rem; border-top: 1px solid rgba(0,0,0,0.05); margin-top: 2rem; color: var(--color-text-secondary); font-size: 0.9rem;">
-                <p style="margin-bottom: 0.5rem;"><a href="editor.html" style="color:inherit;">编辑器</a> · <a href="guide.html" style="color:inherit;">使用指南</a> · <a href="format-demo.html" style="color:inherit;">排版示例</a> · <a href="https://88lin.github.io/TextCard/" target="_blank" rel="noopener" style="color:inherit;">官方在线版</a></p>
-                <p>&copy; 2026 XHS-TextCard Open Source Edition | Original project: <a href="https://github.com/88lin/TextCard" target="_blank" rel="noopener" style="color:inherit;">88lin/TextCard</a></p>
+                <p style="margin-bottom: 0.5rem;"><a href="editor.html" style="color:inherit;">编辑器</a> · <a href="guide.html" style="color:inherit;">使用指南</a> · <a href="format-demo.html" style="color:inherit;">排版示例</a> · <a href="https://github.com/88lin/TextCard" target="_blank" rel="noopener" style="color:inherit;">项目源码</a></p>
+                <p>&copy; 2026 TextCard Studio | Original project: <a href="https://github.com/88lin/TextCard" target="_blank" rel="noopener" style="color:inherit;">88lin/TextCard</a></p>
             </footer>
         </div>
         <div class="landing-bg">
