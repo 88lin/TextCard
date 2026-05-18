@@ -76,6 +76,8 @@ class App {
             downloadAllBtn: document.getElementById('download-all-btn'),
             previewList: document.getElementById('preview-list'),
             previewCount: document.getElementById('preview-count'),
+            previewPageInfo: document.getElementById('preview-page-info'),
+            downloadCurrentBtn: document.getElementById('download-current-btn'),
             previewIndicators: document.getElementById('preview-indicators'),
             previewPrev: document.getElementById('preview-prev'),
             previewNext: document.getElementById('preview-next'),
@@ -134,6 +136,7 @@ class App {
     bindEvents() {
         this.elements.textInput.addEventListener('input', () => this.schedulePreview(500));
         this.elements.downloadAllBtn.addEventListener('click', () => this.downloadAllImages());
+        this.elements.downloadCurrentBtn.addEventListener('click', () => this.downloadCurrentImage());
         this.elements.resetTemplateBtn.addEventListener('click', () => this.resetTemplate());
         this.elements.previewList.addEventListener('scroll', 
             () => requestAnimationFrame(() => this.updateActiveIndicator())
@@ -173,12 +176,17 @@ class App {
         
         const scrollLeft = this.elements.previewList.scrollLeft;
         const width = this.elements.previewList.clientWidth;
-        const index = Math.round(scrollLeft / width);
+        const index = Math.min(
+            Math.max(Math.round(scrollLeft / width), 0),
+            Math.max(this.splitPages.length - 1, 0)
+        );
         
         const indicators = this.elements.previewIndicators.querySelectorAll('.preview-indicator');
         indicators.forEach((indicator, i) => {
             indicator.classList.toggle('active', i === index);
         });
+
+        this.updatePreviewToolbar(index);
 
         if (this.elements.previewPrev) {
             this.elements.previewPrev.disabled = scrollLeft <= 0;
@@ -186,6 +194,18 @@ class App {
         if (this.elements.previewNext) {
             const maxScroll = this.elements.previewList.scrollWidth - this.elements.previewList.clientWidth;
             this.elements.previewNext.disabled = scrollLeft >= maxScroll - 5;
+        }
+    }
+
+    updatePreviewToolbar(index = 0) {
+        const total = this.splitPages.length;
+        if (this.elements.previewPageInfo) {
+            this.elements.previewPageInfo.textContent = total > 0
+                ? `第 ${index + 1} 张 / 共 ${total} 张`
+                : '第 0 张 / 共 0 张';
+        }
+        if (this.elements.downloadCurrentBtn) {
+            this.elements.downloadCurrentBtn.disabled = total === 0;
         }
     }
 
@@ -281,6 +301,7 @@ class App {
             } else {
                 this.currentTemplateConfig = baseConfig;
             }
+            this.currentTemplateConfig.hasSignature = false;
 
             this.renderTemplateList();
             this.editorController.setConfig(this.currentTemplateConfig);
@@ -298,6 +319,7 @@ class App {
             this.elements.downloadAllBtn.disabled = true;
             this.splitPages = [];
             this.renderIndicators(0);
+            this.updatePreviewToolbar(0);
             return;
         }
 
@@ -328,6 +350,7 @@ class App {
                 this.elements.loading.classList.remove('active');
                 this.elements.downloadAllBtn.disabled = true;
                 this.renderIndicators(0);
+                this.updatePreviewToolbar(0);
                 return;
             }
 
@@ -388,6 +411,15 @@ class App {
 
     downloadSingleImage(index) {
         this.downloadManager.download(this.splitPages[index], this.currentTemplateConfig, this.currentTemplate, index, this.splitPages.length);
+    }
+
+    downloadCurrentImage() {
+        if (!this.splitPages.length) return;
+        const index = Math.min(
+            Math.max(Math.round(this.elements.previewList.scrollLeft / this.elements.previewList.clientWidth), 0),
+            this.splitPages.length - 1
+        );
+        this.downloadSingleImage(index);
     }
 
     downloadAllImages() {

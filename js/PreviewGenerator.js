@@ -26,26 +26,6 @@ class PreviewGenerator {
             scale: 2 
         });
 
-        // 头部信息容器
-        const header = document.createElement('div');
-        header.className = 'preview-item-header';
-        
-        const title = document.createElement('div');
-        title.className = 'preview-item-title';
-        title.textContent = `第 ${index + 1} 张 / 共 ${totalCount} 张`;
-        
-        const actions = document.createElement('div');
-        actions.className = 'preview-item-actions';
-        
-        const downloadBtn = document.createElement('button');
-        downloadBtn.className = 'btn-small';
-        downloadBtn.textContent = '下载';
-        downloadBtn.addEventListener('click', () => onDownload(index));
-        
-        actions.appendChild(downloadBtn);
-        header.appendChild(title);
-        header.appendChild(actions);
-
         // 图像包装容器
         const imageWrapper = document.createElement('div');
         imageWrapper.className = 'preview-image-wrapper';
@@ -58,7 +38,6 @@ class PreviewGenerator {
         canvasContainer.appendChild(canvas);
         imageWrapper.appendChild(canvasContainer);
         
-        item.appendChild(header);
         item.appendChild(imageWrapper);
 
         return item;

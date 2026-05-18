@@ -46,7 +46,7 @@ class TemplateManager {
                 hasWatermark: false, 
                 watermarkText: DEFAULT_BRAND_TEXT,
                 watermarkColor: "rgba(0,0,0,0.1)", 
-                hasSignature: true, 
+                hasSignature: false,
                 signatureText: DEFAULT_BRAND_TEXT,
                 signatureColor: "#555555", 
                 signaturePosition: "bottom", 
@@ -57,7 +57,8 @@ class TemplateManager {
                 accentColor: "#333333",
                 hasSocialIcons: false,
                 selectedSocialIcons: [],
-                ...configData.config
+                ...configData.config,
+                hasSignature: false
             };
 
             const template = {
