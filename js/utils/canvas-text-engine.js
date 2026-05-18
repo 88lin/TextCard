@@ -7,6 +7,18 @@
  * 3. 跨页能力：支持对 Layout Blocks 进行高度检测与逻辑切分，为 TextSplitter 提供拆分依据。
  * 4. 富文本渲染：支持内联样式的组合（加粗、斜体、高亮、代码、标题级别）。
  */
+const CJKTypography = {
+    LINE_START_PROHIBITED: new Set([
+        '，', '。', '、', '；', '：', '！', '？', '·',
+        '）', '】', '〕', '〉', '》', '」', '』', ']', ')', '}',
+        '’', '”', '…', '—', ',', '.', ':', ';', '!', '?', '%'
+    ]),
+    LINE_END_PROHIBITED: new Set([
+        '（', '【', '〔', '〈', '《', '「', '『', '[', '(', '{',
+        '‘', '“', '$', '￥'
+    ])
+};
+
 class CanvasTextEngine {
     constructor(config = {}) {
         this.canvas = document.createElement('canvas');
@@ -290,6 +302,55 @@ class CanvasTextEngine {
 
         if (!inlineTokens) return [];
 
+        const sameStyle = (a, b) =>
+            a.fontWeight === b.fontWeight &&
+            a.fontStyle === b.fontStyle &&
+            a.isHighlight === b.isHighlight &&
+            a.isCode === b.isCode &&
+            a.fontSize === b.fontSize &&
+            a.textDecoration === b.textDecoration &&
+            a.headingLevel === b.headingLevel;
+
+        const calcLineWidth = (line) => line.reduce((total, segment) => {
+            return total + this.measureTextWidth(segment.text, segment.fontSize, segment.fontWeight, segment.fontStyle);
+        }, 0);
+
+        const popLastChar = (line) => {
+            if (line.length === 0) return null;
+            const last = line[line.length - 1];
+            const chars = Array.from(last.text);
+            const char = chars.pop();
+            const style = {
+                fontSize: last.fontSize,
+                fontWeight: last.fontWeight,
+                fontStyle: last.fontStyle,
+                isHighlight: last.isHighlight,
+                isCode: last.isCode,
+                textDecoration: last.textDecoration,
+                headingLevel: last.headingLevel
+            };
+
+            if (chars.length > 0) {
+                last.text = chars.join('');
+            } else {
+                line.pop();
+            }
+
+            return { char, style };
+        };
+
+        const pushChar = (line, char, style) => {
+            const last = line[line.length - 1];
+            if (last && sameStyle(last, style)) {
+                last.text += char;
+            } else {
+                line.push({ ...style, text: char });
+            }
+        };
+
+        const isCJK = (char) => /[\u4e00-\u9fff\u3000-\u303f\uff00-\uffef]/.test(char);
+        const isWordChar = (char) => /[a-zA-Z0-9]/.test(char);
+
         const processTokens = (tokens, currentStyle) => {
             for (const token of tokens) {
                 const style = {
@@ -327,15 +388,80 @@ class CanvasTextEngine {
                         const charWidth = this.measureTextWidth(char, style.fontSize, style.fontWeight, style.fontStyle);
 
                         if (currentLineWidth + charWidth > maxWidth && currentLine.length > 0) {
+                            let handled = false;
+
+                            if (CJKTypography.LINE_START_PROHIBITED.has(char)) {
+                                const popped = popLastChar(currentLine);
+                                if (popped && currentLine.length > 0) {
+                                    currentLineWidth = calcLineWidth(currentLine);
+                                    lines.push(currentLine);
+                                    currentLine = [];
+                                    pushChar(currentLine, popped.char, popped.style);
+                                    pushChar(currentLine, char, style);
+                                    currentLineWidth = calcLineWidth(currentLine);
+                                    handled = true;
+                                } else if (popped) {
+                                    pushChar(currentLine, popped.char, popped.style);
+                                }
+                            }
+
+                            if (!handled) {
+                                const lastSegment = currentLine[currentLine.length - 1];
+                                const lastChar = lastSegment ? Array.from(lastSegment.text).pop() : '';
+                                if (lastChar && CJKTypography.LINE_END_PROHIBITED.has(lastChar)) {
+                                    const popped = popLastChar(currentLine);
+                                    if (popped && currentLine.length > 0) {
+                                        currentLineWidth = calcLineWidth(currentLine);
+                                        lines.push(currentLine);
+                                        currentLine = [];
+                                        pushChar(currentLine, popped.char, popped.style);
+                                        pushChar(currentLine, char, style);
+                                        currentLineWidth = calcLineWidth(currentLine);
+                                        handled = true;
+                                    } else if (popped) {
+                                        pushChar(currentLine, popped.char, popped.style);
+                                    }
+                                }
+                            }
+
+                            if (handled) continue;
+
+                            const lastSegment = currentLine[currentLine.length - 1];
+                            const lastChar = lastSegment ? Array.from(lastSegment.text).pop() : '';
+                            const shouldKeepWord = lastSegment &&
+                                isWordChar(char) &&
+                                isWordChar(lastChar) &&
+                                !isCJK(char) &&
+                                !isCJK(lastChar);
+
+                            if (shouldKeepWord) {
+                                const wordChars = [];
+                                let remaining = lastSegment.text;
+                                while (remaining.length > 0) {
+                                    const last = Array.from(remaining).pop();
+                                    if (!isWordChar(last)) break;
+                                    wordChars.unshift(last);
+                                    remaining = Array.from(remaining).slice(0, -1).join('');
+                                }
+
+                                const wordHasPrefix = currentLine.length > 1 || remaining.length > 0;
+                                if (wordChars.length > 0 && wordHasPrefix) {
+                                    lastSegment.text = remaining;
+                                    if (!lastSegment.text) currentLine.pop();
+                                    lines.push(currentLine);
+                                    const nextText = wordChars.join('') + char;
+                                    currentLine = [{ ...style, text: nextText }];
+                                    currentLineWidth = this.measureTextWidth(nextText, style.fontSize, style.fontWeight, style.fontStyle);
+                                    continue;
+                                }
+                            }
+
                             lines.push(currentLine);
                             currentLine = [{ ...style, text: char }];
                             currentLineWidth = charWidth;
                         } else {
                             const last = currentLine[currentLine.length - 1];
-                            if (last && last.fontWeight === style.fontWeight && last.fontStyle === style.fontStyle && 
-                                last.isHighlight === style.isHighlight && last.isCode === style.isCode && 
-                                last.fontSize === style.fontSize && last.textDecoration === style.textDecoration &&
-                                last.headingLevel === style.headingLevel) {
+                            if (last && sameStyle(last, style)) {
                                 last.text += char;
                             } else {
                                 currentLine.push({ ...style, text: char });
@@ -392,4 +518,8 @@ class CanvasTextEngine {
 
         return { part1, part2 };
     }
+}
+
+if (typeof module === 'object' && module.exports) {
+    module.exports = { CanvasTextEngine, CJKTypography };
 }

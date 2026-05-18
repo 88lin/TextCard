@@ -96,12 +96,50 @@
         .header-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 14px;
+            gap: 10px;
             font-size: 14px;
         }
 
         a { color: var(--primary); text-decoration: none; }
         a:hover { text-decoration: underline; }
+
+        .header-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+            padding: 7px 13px;
+            border: 1px solid rgba(37, 99, 235, 0.14);
+            border-radius: 999px;
+            background: #ffffff;
+            color: #334155;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+            white-space: nowrap;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .header-links a:hover {
+            border-color: rgba(37, 99, 235, 0.28);
+            color: var(--primary);
+            text-decoration: none;
+            transform: translateY(-1px);
+            box-shadow: 0 12px 26px rgba(15, 23, 42, 0.08);
+        }
+
+        .api-key-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ff2442 0%, #ff7a1a 100%);
+            box-shadow: 0 10px 22px rgba(255, 36, 66, 0.18);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .api-key-link:hover { color: #ffffff; text-decoration: none; transform: translateY(-1px); }
 
         .container {
             max-width: 920px;
@@ -220,10 +258,9 @@
         <div class="page-header-inner">
             <a class="brand" href="index.html"><img src="logo.png" alt="TextCard Studio"> TextCard Studio</a>
             <nav class="header-links" aria-label="页面导航">
+                <a class="api-key-link" href="https://qm.qq.com/q/T5lLda4Feq" target="_blank" rel="noopener" title="免费免费领取顶级大模型 API Key">✨ 免费领 API Key</a>
                 <a href="editor.html">打开编辑器</a>
                 <a href="format-demo.html">排版示例</a>
-                <a href="index.html">首页</a>
-                <a href="https://github.com/88lin/TextCard-Studio" target="_blank" rel="noopener">GitHub</a>
             </nav>
         </div>
     </header>

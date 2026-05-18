@@ -22,6 +22,7 @@ class App {
         this.elements = {};
         this.debounceTimer = null;
         this.shouldScrollToStart = false;
+        this.aiUndoText = null;
     }
 
     init() {
@@ -30,6 +31,7 @@ class App {
                 MarkdownParser.init();
             }
             this.initElements();
+            this.restoreAISettings();
             this.bindEvents();
             this.loadTemplates();
             this.setDefaultText();
@@ -105,7 +107,22 @@ class App {
             hasCoverCheck: document.getElementById('has-cover'),
             coverTitleInput: document.getElementById('cover-title'),
             coverFontSizeInput: document.getElementById('cover-font-size'),
-            editModeToggle: document.getElementById('edit-mode-toggle')
+            editModeToggle: document.getElementById('edit-mode-toggle'),
+            syntaxHelpTrigger: document.getElementById('syntax-help-trigger'),
+            syntaxHelpToggle: document.getElementById('syntax-help-toggle'),
+            syntaxHelpTooltip: document.getElementById('syntax-help-tooltip'),
+            syntaxSnippets: document.querySelectorAll('.syntax-snippet'),
+            aiFormatBtn: document.getElementById('ai-format-btn'),
+            aiFormatLabel: document.getElementById('ai-format-label'),
+            aiUndoBtn: document.getElementById('ai-undo-btn'),
+            aiSettingsToggle: document.getElementById('ai-settings-toggle'),
+            aiSettingsPanel: document.getElementById('ai-settings-panel'),
+            aiFormatStatus: document.getElementById('ai-format-status'),
+            aiEndpointInput: document.getElementById('ai-endpoint'),
+            aiApiKeyInput: document.getElementById('ai-api-key'),
+            aiModelInput: document.getElementById('ai-model'),
+            aiPromptPresetSelect: document.getElementById('ai-prompt-preset'),
+            aiPromptInput: document.getElementById('ai-prompt')
         };
 
         this.downloadManager.setLoadingElement(this.elements.loading);
@@ -153,6 +170,277 @@ class App {
         if (this.elements.editModeToggle) {
             this.elements.editModeToggle.addEventListener('click', () => this.toggleEditMode());
         }
+        if (this.elements.syntaxHelpToggle) {
+            this.elements.syntaxHelpToggle.addEventListener('click', (event) => {
+                event.stopPropagation();
+                this.toggleSyntaxHelp();
+            });
+        }
+        this.elements.syntaxSnippets?.forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                this.insertSyntaxSnippet(button);
+            });
+        });
+        document.addEventListener('click', (event) => {
+            if (!this.elements.syntaxHelpTrigger?.contains(event.target)) {
+                this.closeSyntaxHelp();
+            }
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                this.closeSyntaxHelp();
+            }
+        });
+
+        if (this.elements.aiFormatBtn) {
+            this.elements.aiFormatBtn.addEventListener('click', () => this.formatWithAI());
+        }
+        if (this.elements.aiUndoBtn) {
+            this.elements.aiUndoBtn.addEventListener('click', () => this.undoAIFormat());
+        }
+        if (this.elements.aiSettingsToggle) {
+            this.elements.aiSettingsToggle.addEventListener('click', () => this.toggleAISettings());
+        }
+        [this.elements.aiEndpointInput, this.elements.aiApiKeyInput, this.elements.aiModelInput].forEach(input => {
+            input?.addEventListener('change', () => this.saveAISettings());
+        });
+        if (this.elements.aiPromptPresetSelect) {
+            this.elements.aiPromptPresetSelect.addEventListener('change', () => {
+                this.applyAIPromptPreset(this.elements.aiPromptPresetSelect.value);
+                this.updateAIActionLabel();
+                this.saveAISettings();
+            });
+        }
+        if (this.elements.aiPromptInput) {
+            this.elements.aiPromptInput.addEventListener('input', () => {
+                this.syncAIPromptPresetFromPrompt();
+                this.updateAIActionLabel();
+                this.saveAISettings();
+            });
+        }
+    }
+
+    toggleSyntaxHelp() {
+        const trigger = this.elements.syntaxHelpTrigger;
+        const toggle = this.elements.syntaxHelpToggle;
+        if (!trigger || !toggle) return;
+
+        const willOpen = !trigger.classList.contains('is-open');
+        trigger.classList.toggle('is-open', willOpen);
+        toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+
+    closeSyntaxHelp() {
+        const trigger = this.elements.syntaxHelpTrigger;
+        const toggle = this.elements.syntaxHelpToggle;
+        if (!trigger || !toggle) return;
+
+        trigger.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    insertSyntaxSnippet(button) {
+        const input = this.elements.textInput;
+        if (!input) return;
+
+        const start = input.selectionStart ?? input.value.length;
+        const end = input.selectionEnd ?? input.value.length;
+        const selectedText = input.value.slice(start, end);
+        const insertText = button.dataset.insert;
+        const prefix = button.dataset.prefix || '';
+        const suffix = button.dataset.suffix || '';
+        const placeholder = button.dataset.placeholder || '';
+        const snippet = insertText !== undefined
+            ? this.decodeSyntaxSnippet(insertText)
+            : `${this.decodeSyntaxSnippet(prefix)}${selectedText || placeholder}${this.decodeSyntaxSnippet(suffix)}`;
+
+        input.setRangeText(snippet, start, end, 'end');
+        input.focus();
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        this.closeSyntaxHelp();
+    }
+
+    decodeSyntaxSnippet(value) {
+        return String(value || '').replace(/\\n/g, '\n');
+    }
+
+    getAIPromptPresets() {
+        if (typeof AIFormatter === 'undefined') return {};
+        return AIFormatter.getPromptPresets();
+    }
+
+    resolveAIPromptPreset(promptPreset, prompt) {
+        const presets = this.getAIPromptPresets();
+        const value = String(prompt || '').trim();
+        if (promptPreset && presets[promptPreset] && presets[promptPreset].prompt.trim() === value) {
+            return promptPreset;
+        }
+
+        const matchedPreset = Object.keys(presets).find(key => presets[key].prompt.trim() === value);
+        return matchedPreset || 'custom';
+    }
+
+    getPromptForPreset(promptPreset) {
+        const presets = this.getAIPromptPresets();
+        return presets[promptPreset]?.prompt || presets.layout?.prompt || '';
+    }
+
+    applyAIPromptPreset(promptPreset) {
+        if (!this.elements.aiPromptInput || promptPreset === 'custom') return;
+
+        const prompt = this.getPromptForPreset(promptPreset);
+        if (prompt) this.elements.aiPromptInput.value = prompt;
+    }
+
+    syncAIPromptPresetFromPrompt() {
+        const select = this.elements.aiPromptPresetSelect;
+        const input = this.elements.aiPromptInput;
+        if (!select || !input) return;
+
+        select.value = this.resolveAIPromptPreset(select.value, input.value);
+    }
+
+    updateAIActionLabel() {
+        const label = this.elements.aiFormatLabel;
+        if (!label || typeof AIFormatter === 'undefined') return;
+
+        const promptPreset = this.elements.aiPromptPresetSelect?.value || 'layout';
+        label.textContent = AIFormatter.getActionLabel(promptPreset);
+    }
+
+    restoreAISettings() {
+        if (!this.elements.aiEndpointInput || typeof AIFormatter === 'undefined') return;
+
+        let settings = AIFormatter.getDefaultConfig();
+        try {
+            const saved = localStorage.getItem('xhs_ai_formatter_settings');
+            if (saved) settings = { ...settings, ...JSON.parse(saved) };
+        } catch (error) {
+            console.warn('[App] Failed to load AI formatter settings:', error);
+        }
+
+        this.elements.aiEndpointInput.value = settings.endpoint || '';
+        this.elements.aiApiKeyInput.value = settings.apiKey || '';
+        this.elements.aiModelInput.value = settings.model || '';
+        if (this.elements.aiPromptInput) {
+            this.elements.aiPromptInput.value = settings.prompt || this.getPromptForPreset(settings.promptPreset || 'layout');
+        }
+        if (this.elements.aiPromptPresetSelect) {
+            this.elements.aiPromptPresetSelect.value = this.resolveAIPromptPreset(
+                settings.promptPreset || 'layout',
+                this.elements.aiPromptInput?.value || settings.prompt
+            );
+        }
+        this.updateAIActionLabel();
+    }
+
+    getAISettings() {
+        return {
+            endpoint: this.elements.aiEndpointInput?.value?.trim() || '',
+            apiKey: this.elements.aiApiKeyInput?.value?.trim() || '',
+            model: this.elements.aiModelInput?.value?.trim() || '',
+            promptPreset: this.elements.aiPromptPresetSelect?.value || 'layout',
+            prompt: this.elements.aiPromptInput?.value || '',
+            timeoutMs: typeof AIFormatter !== 'undefined' ? AIFormatter.DEFAULT_TIMEOUT_MS : 180000
+        };
+    }
+
+    saveAISettings() {
+        try {
+            localStorage.setItem('xhs_ai_formatter_settings', JSON.stringify(this.getAISettings()));
+        } catch (error) {
+            console.warn('[App] Failed to save AI formatter settings:', error);
+        }
+    }
+
+    toggleAISettings() {
+        const panel = this.elements.aiSettingsPanel;
+        const toggle = this.elements.aiSettingsToggle;
+        if (!panel || !toggle) return;
+
+        const isOpen = panel.hasAttribute('hidden');
+        panel.toggleAttribute('hidden', !isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        toggle.classList.toggle('active', isOpen);
+
+        if (isOpen) {
+            requestAnimationFrame(() => this.scrollAISettingsIntoView());
+        }
+    }
+
+    scrollAISettingsIntoView() {
+        const panel = this.elements.aiSettingsPanel;
+        const formatPanel = panel?.closest('.ai-format-panel');
+        const scrollContainer = panel?.closest('.left-panel');
+        if (!panel || !formatPanel || !scrollContainer) return;
+
+        const containerRect = scrollContainer.getBoundingClientRect();
+        const targetRect = formatPanel.getBoundingClientRect();
+        const topOffset = 4;
+        const targetTop = scrollContainer.scrollTop + targetRect.top - containerRect.top - topOffset;
+
+        scrollContainer.scrollTo({
+            top: Math.max(0, targetTop),
+            behavior: 'smooth'
+        });
+    }
+
+    setAIStatus(message, type = '') {
+        const status = this.elements.aiFormatStatus;
+        if (!status) return;
+        status.textContent = message || '';
+        status.className = `ai-format-status${type ? ` ${type}` : ''}`;
+    }
+
+    setAIFormattingState(isLoading) {
+        const button = this.elements.aiFormatBtn;
+        if (!button) return;
+
+        button.disabled = isLoading;
+        button.classList.toggle('loading', isLoading);
+    }
+
+    async formatWithAI() {
+        if (typeof AIFormatter === 'undefined') {
+            this.setAIStatus('AI 排版模块加载失败，请刷新页面重试。', 'error');
+            return;
+        }
+
+        const originalText = this.elements.textInput.value;
+        if (!originalText.trim()) {
+            this.setAIStatus('请先粘贴需要排版的文字。', 'error');
+            return;
+        }
+
+        this.saveAISettings();
+        this.setAIFormattingState(true);
+        this.setAIStatus('AI 正在整理文案...');
+
+        try {
+            const formattedText = await AIFormatter.formatText(this.getAISettings(), originalText);
+            this.aiUndoText = originalText;
+            this.elements.textInput.value = formattedText;
+            if (this.elements.aiUndoBtn) this.elements.aiUndoBtn.disabled = false;
+            await this.generatePreview();
+            this.setAIStatus('排版完成，右侧预览已更新。', 'success');
+        } catch (error) {
+            console.error('[App] AI formatting failed:', error);
+            this.setAIStatus(error.message || 'AI 排版失败，请检查接口配置。', 'error');
+        } finally {
+            this.setAIFormattingState(false);
+        }
+    }
+
+    undoAIFormat() {
+        if (this.aiUndoText === null) return;
+
+        this.elements.textInput.value = this.aiUndoText;
+        this.aiUndoText = null;
+        if (this.elements.aiUndoBtn) this.elements.aiUndoBtn.disabled = true;
+        this.setAIStatus('已恢复 AI 排版前的原文。');
+        this.generatePreview();
     }
 
     toggleEditMode() {

@@ -84,15 +84,16 @@
         <!-- 左侧：输入区域 -->
         <div class="left-panel">
             <div class="panel-header">
-                <a href="index.html" class="btn-icon-text" title="返回主页">
-                    <i class="fas fa-home"></i>
-                </a>
-                <div style="display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 16px; margin-left: 12px;">
+                <div style="display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 16px;">
                     <img src="logo.png" alt="TextCard Studio" width="20" height="20">
                     工作台
                 </div>
-                <div style="display: flex; align-items: center; gap: 10px; margin-left: auto; font-size: 13px;">
-                    <a href="guide.html" target="_blank" rel="noopener" style="color: #6e6e73; text-decoration: none;">使用指南</a>
+                <div class="editor-header-actions">
+                    <a class="api-key-promo" href="https://qm.qq.com/q/T5lLda4Feq" target="_blank" rel="noopener" title="免费免费领取顶级大模型 API Key">
+                        <i class="fas fa-key"></i>
+                        <span>免费领 API Key</span>
+                    </a>
+                    <a class="editor-nav-pill" href="guide.html" target="_blank" rel="noopener">使用指南</a>
                 </div>
                 <button class="edit-mode-toggle" id="edit-mode-toggle" title="专注编辑模式">
                     <i class="fas fa-expand-alt"></i>
@@ -102,30 +103,76 @@
                 <div class="section-title">
                     <i class="fas fa-edit"></i>
                     输入文字
-                    <div class="help-trigger" id="syntax-help-trigger" role="button" aria-label="语法速查" aria-expanded="false" aria-controls="syntax-help-tooltip">
-                        <i class="far fa-question-circle" aria-hidden="true"></i>
+                    <div class="help-trigger" id="syntax-help-trigger">
+                        <button type="button" class="syntax-help-toggle" id="syntax-help-toggle" aria-label="语法速查" aria-expanded="false" aria-controls="syntax-help-tooltip" title="语法速查">
+                            <i class="fas fa-keyboard" aria-hidden="true"></i>
+                        </button>
                         <div class="help-tooltip" id="syntax-help-tooltip" role="tooltip">
                             <div class="help-title">语法速查</div>
                             <ul class="help-list">
-                                <li><span># 标题</span> <span>一级标题</span></li>
-                                <li><span>## 标题</span> <span>二级标题</span></li>
-                                <li><span>---</span> <span>分割线 (强制分页)</span></li>
-                                <li><span>**文本**</span> <span>加粗</span></li>
-                                <li><span>*文本*</span> <span>斜体</span></li>
-                                <li><span>~~文本~~</span> <span>删除线</span></li>
-                                <li><span>==文本==</span> <span>高亮</span></li>
-                                <li><span>::: center ... :::</span> <span>居中块</span></li>
-                                <li><span>> 文本</span> <span>引用</span></li>
-                                <li><span>`文本`</span> <span>行内代码</span></li>
-                                <li><span>- 列表</span> <span>无序列表</span></li>
-                                <li><span>1. 列表</span> <span>有序列表</span></li>
-                                <li><span>![描述](链接)</span> <span>插入图片</span></li>
-                                <li><span>↵↵</span> <span>双回车 (建议分页点)</span></li>
+                                <li><button type="button" class="syntax-snippet" data-insert="# "><span># 标题</span> <span>一级标题</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-insert="## "><span>## 标题</span> <span>二级标题</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-insert="---"><span>---</span> <span>分割线 (强制分页)</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-prefix="**" data-suffix="**" data-placeholder="文本"><span>**文本**</span> <span>加粗</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-prefix="*" data-suffix="*" data-placeholder="文本"><span>*文本*</span> <span>斜体</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-prefix="~~" data-suffix="~~" data-placeholder="文本"><span>~~文本~~</span> <span>删除线</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-prefix="==" data-suffix="==" data-placeholder="文本"><span>==文本==</span> <span>高亮</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-prefix="::: center\n" data-suffix="\n:::" data-placeholder="居中文本"><span>::: center ... :::</span> <span>居中块</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-insert="> "><span>&gt; 文本</span> <span>引用</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-prefix="`" data-suffix="`" data-placeholder="文本"><span>`文本`</span> <span>行内代码</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-insert="- "><span>- 列表</span> <span>无序列表</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-insert="1. "><span>1. 列表</span> <span>有序列表</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-insert="![描述](链接)"><span>![描述](链接)</span> <span>插入图片</span></button></li>
+                                <li><button type="button" class="syntax-snippet" data-insert="\n\n"><span>↵↵</span> <span>双回车 (建议分页点)</span></button></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <textarea id="text-input"></textarea>
+                <div class="ai-format-panel">
+                    <div class="ai-format-actions">
+                        <button class="btn btn-primary ai-format-btn" id="ai-format-btn">
+                            <i class="fas fa-wand-magic-sparkles"></i>
+                            <span id="ai-format-label">AI 智能排版</span>
+                        </button>
+                        <button class="btn btn-secondary ai-undo-btn" id="ai-undo-btn" disabled>
+                            <i class="fas fa-undo"></i>
+                            撤销
+                        </button>
+                        <button class="btn btn-secondary ai-settings-toggle" id="ai-settings-toggle" aria-expanded="false" aria-controls="ai-settings-panel" title="AI 接口设置">
+                            <i class="fas fa-sliders-h"></i>
+                        </button>
+                    </div>
+                    <div class="ai-format-status" id="ai-format-status" role="status"></div>
+                    <div class="ai-settings-panel" id="ai-settings-panel" hidden>
+                        <div class="form-group">
+                            <label class="form-label" for="ai-endpoint">接口地址</label>
+                            <input class="form-input" id="ai-endpoint" type="url" autocomplete="off" placeholder="https://api.openai.com/v1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="ai-api-key">API Key</label>
+                            <input class="form-input" id="ai-api-key" type="password" autocomplete="off" placeholder="sk-...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="ai-model">模型</label>
+                            <input class="form-input" id="ai-model" type="text" autocomplete="off" placeholder="gpt-5.5">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="ai-prompt-preset">提示词预设</label>
+                            <select class="form-input form-select" id="ai-prompt-preset">
+                                <option value="layout">AI 智能排版</option>
+                                <option value="writer">写作助手</option>
+                                <option value="custom">自定义</option>
+                            </select>
+                        </div>
+                        <div class="form-group ai-prompt-form-group">
+                            <label class="form-label" for="ai-prompt">提示词</label>
+                            <textarea class="form-input ai-prompt-input" id="ai-prompt" rows="8" spellcheck="false"></textarea>
+                            <div class="ai-prompt-hint">写作助手的主题填在左侧输入文字框，这里只编辑 AI 的指令模板。</div>
+                        </div>
+                        <div class="ai-settings-note">浏览器直连接口，密钥仅保存到本地；接口需允许 CORS。</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -580,6 +627,7 @@
     <!-- JavaScript 模块 -->
     <script src="js/constants.js"></script>
     <script src="js/utils/markdown.js"></script>
+    <script src="js/AIFormatter.js"></script>
     <script src="js/utils/canvas-text-engine.js"></script>
     <script src="js/utils/canvas-utils.js"></script>
     <script src="js/TemplateDefinitions.js"></script>
